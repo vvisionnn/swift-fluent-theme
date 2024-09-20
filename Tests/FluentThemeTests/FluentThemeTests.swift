@@ -1,4 +1,4 @@
-@testable import swift_fluent_theme
+@testable import FluentTheme
 import Testing
 
 @Test func example() async throws {

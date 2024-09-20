@@ -1,5 +1,4 @@
 import SwiftUI
-import UIKit
 
 extension UIColor {
 	/// Creates a dynamic color object that returns the appropriate color value based on the current
@@ -69,10 +68,7 @@ extension UIColor {
 	///
 	/// - Parameter light: The default color for a light context. Required.
 	/// - Parameter dark: The override color for a dark context. Required.
-	public convenience init(
-		light: UIColor,
-		dark: UIColor
-	) {
+	public convenience init(light: UIColor, dark: UIColor) {
 		self.init(
 			light: light,
 			lightHighContrast: nil,

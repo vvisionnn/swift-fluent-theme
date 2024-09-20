@@ -1,7 +1,7 @@
 import SwiftUI
 
 /// Represents the description of a font used by FluentUI components.
-public final class FontInfo: Sendable {
+public struct FontInfo: Sendable {
 	public let name: String?
 	public let size: CGFloat
 	public let weight: Font.Weight

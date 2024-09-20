@@ -13,11 +13,7 @@ extension Color {
 		let red = CGFloat((hexValue & 0x00FF0000) >> 16) / 255.0
 		let green = CGFloat((hexValue & 0x0000FF00) >> 8) / 255.0
 		let blue = CGFloat(hexValue & 0x000000FF) / 255.0
-		self.init(
-			red: red,
-			green: green,
-			blue: blue
-		)
+		self.init(red: red,green: green,blue: blue)
 	}
 
 	/// Creates a custom `Color` that stores a dynamic set of `Color` values.
@@ -25,40 +21,28 @@ extension Color {
 	/// - Parameter light: The default `Color` for a light context. Required.
 	/// - Parameter dark: The override `Color` for a dark context. Optional.
 	/// - Parameter darkElevated: The override `Color` for a dark elevated context. Optional.
-	init(
-		light: Color,
-		dark: Color? = nil,
-		darkElevated: Color? = nil
-	) {
+	init(light: Color, dark: Color? = nil, darkElevated: Color? = nil) {
 		let dynamicColor = DynamicColor(light: light, dark: dark, darkElevated: darkElevated)
-		if #available(iOS 17, *) {
-			self.init(dynamicColor)
-		} else {
-			self.init(uiColor: UIColor(dynamicColor: dynamicColor))
-		}
+		self.init(dynamicColor)
 	}
 
 	init(dynamicColor: DynamicColor) {
-		if #available(iOS 17, *) {
-			self.init(dynamicColor)
-		} else {
-			self.init(uiColor: UIColor(dynamicColor: dynamicColor))
-		}
+		self.init(dynamicColor)
 	}
 }
 
 /// A container that stores a dynamic set of `Color` values.
 struct DynamicColor: Hashable {
+	let light: Color
+	let dark: Color?
+	let darkElevated: Color?
+
 	/// Creates a custom `ShapeStyle` that stores a dynamic set of `Color` values.
 	///
 	/// - Parameter light: The default `Color` for a light context. Required.
 	/// - Parameter dark: The override `Color` for a dark context. Optional.
 	/// - Parameter darkElevated: The override `Color` for a dark elevated context. Optional.
-	init(
-		light: Color,
-		dark: Color? = nil,
-		darkElevated: Color? = nil
-	) {
+	init(light: Color, dark: Color? = nil, darkElevated: Color? = nil) {
 		self.light = light
 		self.dark = dark
 		self.darkElevated = darkElevated
@@ -71,10 +55,6 @@ struct DynamicColor: Hashable {
 			darkElevated: Color(uiColor.darkElevated)
 		)
 	}
-
-	let light: Color
-	let dark: Color?
-	let darkElevated: Color?
 }
 
 @available(iOS 17, *)

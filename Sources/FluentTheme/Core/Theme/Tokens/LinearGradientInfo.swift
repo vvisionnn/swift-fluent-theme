@@ -3,7 +3,21 @@ import Foundation
 import SwiftUI
 
 /// Represents a linear gradient as used by FluentUI.
-public class LinearGradientInfo: NSObject {
+public struct LinearGradientInfo: Sendable {
+	/// The array of colors to apply to this linear gradient.
+	public let colors: [UIColor]
+	
+	/// An optional array of values defining the location of each gradient stop.
+	///
+	/// Must be in the range `[0, 1]`.
+	public let locations: [CGFloat]?
+	
+	/// The starting point for this gradient. Values should range from 0.0 to 1.0.
+	public let startPoint: CGPoint
+	
+	/// The ending point for this gradient. Values should range from 0.0 to 1.0.
+	public let endPoint: CGPoint
+
 	/// Initializes a linear gradient to be used in Fluent.
 	///
 	/// - Parameters:
@@ -22,20 +36,6 @@ public class LinearGradientInfo: NSObject {
 		self.startPoint = startPoint
 		self.endPoint = endPoint
 	}
-
-	/// The array of colors to apply to this linear gradient.
-	public let colors: [UIColor]
-
-	/// An optional array of values defining the location of each gradient stop.
-	///
-	/// Must be in the range `[0, 1]`.
-	public let locations: [CGFloat]?
-
-	/// The starting point for this gradient. Values should range from 0.0 to 1.0.
-	public let startPoint: CGPoint
-
-	/// The ending point for this gradient. Values should range from 0.0 to 1.0.
-	public let endPoint: CGPoint
 }
 
 // MARK: - Extensions

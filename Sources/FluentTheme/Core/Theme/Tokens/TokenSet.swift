@@ -4,7 +4,7 @@ import Foundation
 public typealias TokenSetKey = Hashable & CaseIterable & Sendable
 
 /// Template for all token sets, both global and alias. This ensures a unified return type for any given token set.
-public final class TokenSet<T: TokenSetKey, V: Sendable>: Sendable {
+public struct TokenSet<T: TokenSetKey, V: Sendable>: Sendable {
 	private let valueOverrides: [T: V]?
 	private let defaultValues: @Sendable (_ token: T) -> V
 

@@ -30,7 +30,7 @@ extension GlobalTokens {
 		case gradientTertiaryDark
 	}
 	
-	public static func brandSwiftUIColor(_ token: BrandColorToken) -> Color {
+	public static func brandColor(_ token: BrandColorToken) -> Color {
 		switch token {
 		case .comm10: Color(hexValue: 0x061724)
 		case .comm20: Color(hexValue: 0x082338)

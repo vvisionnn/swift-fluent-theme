@@ -57,7 +57,7 @@ extension GlobalTokens {
 		case white
 	}
 	
-	public static func neutralSwiftUIColor(_ token: NeutralColorToken) -> Color {
+	public static func neutralColor(_ token: NeutralColorToken) -> Color {
 		switch token {
 		case .black: Color(hexValue: 0x000000)
 		case .grey2: Color(hexValue: 0x050505)

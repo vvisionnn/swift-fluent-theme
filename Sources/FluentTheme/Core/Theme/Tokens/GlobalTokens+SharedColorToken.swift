@@ -70,7 +70,7 @@ extension GlobalTokens {
 		case tint60
 	}
 
-	public static func sharedSwiftUIColor(_ sharedColor: SharedColorSet, _ token: SharedColorToken) -> Color {
+	public static func sharedColor(_ sharedColor: SharedColorSet, _ token: SharedColorToken) -> Color {
 		switch sharedColor {
 		case .anchor:
 			switch token {

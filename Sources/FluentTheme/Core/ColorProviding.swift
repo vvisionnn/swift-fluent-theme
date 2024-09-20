@@ -35,45 +35,41 @@ extension ColorProviding {
 	var brandGradient3: UIColor? { nil }
 }
 
-private func brandColorOverrides(provider: any ColorProviding) -> [FluentTheme.ColorToken: UIColor] {
-	var brandColors: [FluentTheme.ColorToken: UIColor] = [:]
-
-	brandColors[.brandBackground1] = provider.brandBackground1
-	brandColors[.brandBackground1Pressed] = provider.brandBackground1Pressed
-	brandColors[.brandBackground1Selected] = provider.brandBackground1Selected
-	brandColors[.brandBackground2] = provider.brandBackground2
-	brandColors[.brandBackground2Pressed] = provider.brandBackground2Pressed
-	brandColors[.brandBackground2Selected] = provider.brandBackground2Selected
-	brandColors[.brandBackground3] = provider.brandBackground3
-	brandColors[.brandBackgroundTint] = provider.brandBackgroundTint
-	brandColors[.brandBackgroundDisabled] = provider.brandBackgroundDisabled
-	brandColors[.brandForeground1] = provider.brandForeground1
-	brandColors[.brandForeground1Pressed] = provider.brandForeground1Pressed
-	brandColors[.brandForeground1Selected] = provider.brandForeground1Selected
-	brandColors[.brandForegroundTint] = provider.brandForegroundTint
-	brandColors[.brandForegroundDisabled1] = provider.brandForegroundDisabled1
-	brandColors[.brandForegroundDisabled2] = provider.brandForegroundDisabled2
-	brandColors[.brandStroke1] = provider.brandStroke1
-	brandColors[.brandStroke1Pressed] = provider.brandStroke1Pressed
-	brandColors[.brandStroke1Selected] = provider.brandStroke1Selected
-
-	if let brandGradient1 = provider.brandGradient1 {
-		brandColors[.brandGradient1] = brandGradient1
+extension FluentTheme {
+	public convenience init(provider: any ColorProviding) {
+		self.init(colorOverrides: Self.brandColorOverrides(provider: provider))
 	}
 
-	if let brandGradient2 = provider.brandGradient2 {
-		brandColors[.brandGradient2] = brandGradient2
+	private static func brandColorOverrides(provider: any ColorProviding) -> [FluentTheme.ColorToken: UIColor] {
+		var brandColors: [FluentTheme.ColorToken: UIColor] = [:]
+		brandColors[.brandBackground1] = provider.brandBackground1
+		brandColors[.brandBackground1Pressed] = provider.brandBackground1Pressed
+		brandColors[.brandBackground1Selected] = provider.brandBackground1Selected
+		brandColors[.brandBackground2] = provider.brandBackground2
+		brandColors[.brandBackground2Pressed] = provider.brandBackground2Pressed
+		brandColors[.brandBackground2Selected] = provider.brandBackground2Selected
+		brandColors[.brandBackground3] = provider.brandBackground3
+		brandColors[.brandBackgroundTint] = provider.brandBackgroundTint
+		brandColors[.brandBackgroundDisabled] = provider.brandBackgroundDisabled
+		brandColors[.brandForeground1] = provider.brandForeground1
+		brandColors[.brandForeground1Pressed] = provider.brandForeground1Pressed
+		brandColors[.brandForeground1Selected] = provider.brandForeground1Selected
+		brandColors[.brandForegroundTint] = provider.brandForegroundTint
+		brandColors[.brandForegroundDisabled1] = provider.brandForegroundDisabled1
+		brandColors[.brandForegroundDisabled2] = provider.brandForegroundDisabled2
+		brandColors[.brandStroke1] = provider.brandStroke1
+		brandColors[.brandStroke1Pressed] = provider.brandStroke1Pressed
+		brandColors[.brandStroke1Selected] = provider.brandStroke1Selected
+		brandColors[.brandGradient1] = provider.brandGradient1
+		brandColors[.brandGradient2] = provider.brandGradient2
+		brandColors[.brandGradient3] = provider.brandGradient3
+
+		#if os(visionOS)
+		// Remove the dark values from all our brand colors on visionOS.
+		// We only want the light variants.
+		brandColors = brandColors.mapValues { $0.light }
+		#endif
+
+		return brandColors
 	}
-
-	if let brandGradient3 = provider.brandGradient3 {
-		brandColors[.brandGradient3] = brandGradient3
-	}
-
-	#if os(visionOS)
-	// Remove the dark values from all our brand colors on visionOS.
-	// We only want the light variants.
-	brandColors = brandColors.mapValues { $0.light }
-	#endif
-
-	return brandColors
 }

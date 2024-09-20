@@ -4,10 +4,10 @@ import SwiftUI
 /// Base class that allows for customization of global, alias, and control tokens.
 @Observable
 public final class FluentTheme: Sendable {
-	let colorTokenSet: TokenSet<ColorToken, DynamicColor>
-	let shadowTokenSet: TokenSet<ShadowToken, ShadowInfo>
-	let typographyTokenSet: TokenSet<TypographyToken, FontInfo>
-	let gradientTokenSet: TokenSet<GradientToken, [DynamicColor]>
+	let colorTokenSet: LockIsolated<TokenSet<ColorToken, DynamicColor>>
+	let shadowTokenSet: LockIsolated<TokenSet<ShadowToken, ShadowInfo>>
+	let typographyTokenSet: LockIsolated<TokenSet<TypographyToken, FontInfo>>
+	let gradientTokenSet: LockIsolated<TokenSet<GradientToken, [DynamicColor]>>
 
 	public init(
 		colorOverrides: [ColorToken: UIColor]? = nil,
@@ -25,18 +25,32 @@ public final class FluentTheme: Sendable {
 		let defaultColorFunction: (@Sendable (FluentTheme.ColorToken) -> DynamicColor) = FluentTheme.defaultColor(_:)
 		let colorTokenSet = TokenSet<ColorToken, DynamicColor>(defaultColorFunction, mappedColorOverrides)
 		let shadowTokenSet = TokenSet<ShadowToken, ShadowInfo>(FluentTheme.defaultShadow(_:), shadowOverrides)
-		let typographyTokenSet = TokenSet<TypographyToken, FontInfo>(
-			FluentTheme.defaultTypography(_:),
-			mappedTypographyOverrides
-		)
-		let gradientTokenSet = TokenSet<GradientToken, [DynamicColor]>({ [colorTokenSet] token in
-			// Reference the colorTokenSet as part of the gradient lookup
+		let typographyTokenSet = TokenSet<TypographyToken, FontInfo>(FluentTheme.defaultTypography(_:), mappedTypographyOverrides)
+		let gradientTokenSet = TokenSet<GradientToken, [DynamicColor]>({ token in
 			FluentTheme.defaultGradientColor(token, colorTokenSet: colorTokenSet)
 		})
 
-		self.colorTokenSet = colorTokenSet
-		self.shadowTokenSet = shadowTokenSet
-		self.typographyTokenSet = typographyTokenSet
-		self.gradientTokenSet = gradientTokenSet
+		self.colorTokenSet = .init(colorTokenSet)
+		self.shadowTokenSet = .init(shadowTokenSet)
+		self.typographyTokenSet = .init(typographyTokenSet)
+		self.gradientTokenSet = .init(gradientTokenSet)
+	}
+}
+
+extension FluentTheme {
+	public func restoreDefaults() {
+		let defaultTheme = FluentTheme()
+		colorTokenSet.withValue { $0 = defaultTheme.colorTokenSet.value }
+		shadowTokenSet.withValue { $0 = defaultTheme.shadowTokenSet.value }
+		typographyTokenSet.withValue { $0 = defaultTheme.typographyTokenSet.value }
+		gradientTokenSet.withValue { $0 = defaultTheme.gradientTokenSet.value }
+	}
+
+	public func update(colors: any ColorProviding) {
+		let newTheme = FluentTheme(provider: colors)
+		colorTokenSet.withValue { $0 = newTheme.colorTokenSet.value }
+		shadowTokenSet.withValue { $0 = newTheme.shadowTokenSet.value }
+		typographyTokenSet.withValue { $0 = newTheme.typographyTokenSet.value }
+		gradientTokenSet.withValue { $0 = newTheme.gradientTokenSet.value }
 	}
 }

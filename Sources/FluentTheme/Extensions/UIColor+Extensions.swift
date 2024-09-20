@@ -173,29 +173,17 @@ extension UIColor {
 	/// - Parameter userInterfaceLevel: The user interface level to use when resolving the color information.
 	///
 	/// - Returns: The version of the color to display for the specified traits.
+
 	private func resolvedColorValue(
 		userInterfaceStyle: UIUserInterfaceStyle,
 		accessibilityContrast: UIAccessibilityContrast = .unspecified,
 		userInterfaceLevel: UIUserInterfaceLevel = .unspecified
 	) -> UIColor {
-		let traitCollection: UITraitCollection
-		if #available(iOS 17, *) {
-			traitCollection = UITraitCollection { mutableTraits in
-				mutableTraits.userInterfaceStyle = userInterfaceStyle
-				mutableTraits.accessibilityContrast = accessibilityContrast
-				mutableTraits.userInterfaceLevel = userInterfaceLevel
-			}
-		} else {
-			let traitCollectionStyle = UITraitCollection(userInterfaceStyle: userInterfaceStyle)
-			let traitCollectionContrast = UITraitCollection(accessibilityContrast: accessibilityContrast)
-			let traitCollectionLevel = UITraitCollection(userInterfaceLevel: userInterfaceLevel)
-			traitCollection = UITraitCollection(traitsFrom: [
-				traitCollectionStyle,
-				traitCollectionContrast,
-				traitCollectionLevel,
-			])
-		}
-		let resolvedColor = resolvedColor(with: traitCollection)
+		let resolvedColor = resolvedColor(with: .init(mutations: { mutableTraits in
+			mutableTraits.userInterfaceStyle = userInterfaceStyle
+			mutableTraits.accessibilityContrast = accessibilityContrast
+			mutableTraits.userInterfaceLevel = userInterfaceLevel
+		}))
 		return resolvedColor
 	}
 }

@@ -6,6 +6,7 @@ extension FluentTheme {
 	///
 	/// - Parameter token: The `ColorsTokens` value to be retrieved.
 	/// - Returns: A `UIColor` for the given token.
+	@MainActor
 	public func color(_ token: ColorToken) -> UIColor {
 		UIColor(dynamicColor: colorTokenSet[token])
 	}
@@ -14,6 +15,7 @@ extension FluentTheme {
 	///
 	/// - Parameter token: The `GradientTokens` value to be retrieved.
 	/// - Returns: An array of `UIColor` values for the given token.
+	@MainActor
 	public func gradient(_ token: GradientToken) -> [UIColor] {
 		gradientTokenSet[token].map { UIColor(dynamicColor: $0) }
 	}

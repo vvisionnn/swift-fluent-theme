@@ -5,7 +5,7 @@ public struct FontInfo: Sendable {
 	public let name: String?
 	public let size: CGFloat
 	public let weight: Font.Weight
-	
+
 	var textStyle: Font.TextStyle {
 		Self.sizeTuples
 			.first(where: { size, _ in self.size >= size })

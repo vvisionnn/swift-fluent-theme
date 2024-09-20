@@ -14,7 +14,7 @@ extension GlobalTokens {
 		case size800
 		case size900
 	}
-	
+
 	public static func fontSize(_ token: FontSizeToken) -> CGFloat {
 		switch token {
 		case .size100: 12.0

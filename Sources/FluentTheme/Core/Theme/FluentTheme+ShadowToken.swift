@@ -18,7 +18,7 @@ extension FluentTheme {
 	public func shadow(_ token: ShadowToken) -> ShadowInfo {
 		shadowTokenSet[token]
 	}
-	
+
 	static func defaultShadow(_ token: ShadowToken) -> ShadowInfo {
 		switch token {
 		case .clear:

@@ -27,7 +27,7 @@ extension FluentTheme {
 		case backgroundDisabled
 		case stencil1
 		case stencil2
-		
+
 		// Neutral colors - Foreground
 		case foreground1
 		case foreground2
@@ -37,7 +37,7 @@ extension FluentTheme {
 		case foregroundOnColor
 		case foregroundDarkStatic
 		case foregroundLightStatic
-		
+
 		// Neutral colors - Stroke
 		case stroke1
 		case stroke1Pressed
@@ -46,7 +46,7 @@ extension FluentTheme {
 		case strokeFocus1
 		case strokeFocus2
 		case strokeDisabled
-		
+
 		// Brand colors - Brand background
 		case brandBackground1
 		case brandBackground1Pressed
@@ -57,7 +57,7 @@ extension FluentTheme {
 		case brandBackground3
 		case brandBackgroundTint
 		case brandBackgroundDisabled
-		
+
 		// Brand colors - Brand foreground
 		case brandForeground1
 		case brandForeground1Pressed
@@ -65,17 +65,17 @@ extension FluentTheme {
 		case brandForegroundTint
 		case brandForegroundDisabled1
 		case brandForegroundDisabled2
-		
+
 		// Brand colors - Brand gradient
 		case brandGradient1
 		case brandGradient2
 		case brandGradient3
-		
+
 		// Brand colors - Brand stroke
 		case brandStroke1
 		case brandStroke1Pressed
 		case brandStroke1Selected
-		
+
 		// Shared colors - Error & Status
 		case dangerBackground1
 		case dangerBackground2
@@ -98,14 +98,14 @@ extension FluentTheme {
 		case severeForeground1
 		case severeForeground2
 		case severeStroke1
-		
+
 		// Shared colors - Presence
 		case presenceAway
 		case presenceDnd
 		case presenceAvailable
 		case presenceOof
 	}
-	
+
 	/// Returns the color value for the given token.
 	///
 	/// - Parameter token: The `ColorsTokens` value to be retrieved.
@@ -113,7 +113,7 @@ extension FluentTheme {
 	public func color(_ token: ColorToken) -> Color {
 		Color(dynamicColor: colorTokenSet[token])
 	}
-	
+
 	static func defaultColor(_ token: FluentTheme.ColorToken) -> DynamicColor {
 		switch token {
 		case .foreground1:

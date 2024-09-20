@@ -15,7 +15,7 @@ extension FluentTheme {
 		case caption1
 		case caption2
 	}
-	
+
 	/// Returns the font value for the given token.
 	///
 	/// - Parameter token: The `TypographyTokens` value to be retrieved.
@@ -27,7 +27,7 @@ extension FluentTheme {
 			shouldScale: adjustsForContentSizeCategory
 		)
 	}
-	
+
 	/// Returns the font value for the given token.
 	///
 	/// - Parameter token: The `TypographyTokens` value to be retrieved.
@@ -45,69 +45,69 @@ extension FluentTheme {
 			contentSizeCategory: contentSizeCategory
 		)
 	}
-	
+
 	static func defaultTypography(_ token: TypographyToken) -> FontInfo {
 		switch token {
 		case .display:
-				.init(
-					size: GlobalTokens.fontSize(.size900),
-					weight: GlobalTokens.fontWeight(.bold)
-				)
+			.init(
+				size: GlobalTokens.fontSize(.size900),
+				weight: GlobalTokens.fontWeight(.bold)
+			)
 		case .largeTitle:
-				.init(
-					size: GlobalTokens.fontSize(.size800),
-					weight: GlobalTokens.fontWeight(.bold)
-				)
+			.init(
+				size: GlobalTokens.fontSize(.size800),
+				weight: GlobalTokens.fontWeight(.bold)
+			)
 		case .title1:
-				.init(
-					size: GlobalTokens.fontSize(.size700),
-					weight: GlobalTokens.fontWeight(.bold)
-				)
+			.init(
+				size: GlobalTokens.fontSize(.size700),
+				weight: GlobalTokens.fontWeight(.bold)
+			)
 		case .title2:
-				.init(
-					size: GlobalTokens.fontSize(.size600),
-					weight: GlobalTokens.fontWeight(.semibold)
-				)
+			.init(
+				size: GlobalTokens.fontSize(.size600),
+				weight: GlobalTokens.fontWeight(.semibold)
+			)
 		case .title3:
-				.init(
-					size: GlobalTokens.fontSize(.size500),
-					weight: GlobalTokens.fontWeight(.semibold)
-				)
+			.init(
+				size: GlobalTokens.fontSize(.size500),
+				weight: GlobalTokens.fontWeight(.semibold)
+			)
 		case .body1Strong:
-				.init(
-					size: GlobalTokens.fontSize(.size400),
-					weight: GlobalTokens.fontWeight(.semibold)
-				)
+			.init(
+				size: GlobalTokens.fontSize(.size400),
+				weight: GlobalTokens.fontWeight(.semibold)
+			)
 		case .body1:
-				.init(
-					size: GlobalTokens.fontSize(.size400),
-					weight: GlobalTokens.fontWeight(.regular)
-				)
+			.init(
+				size: GlobalTokens.fontSize(.size400),
+				weight: GlobalTokens.fontWeight(.regular)
+			)
 		case .body2Strong:
-				.init(
-					size: GlobalTokens.fontSize(.size300),
-					weight: GlobalTokens.fontWeight(.semibold)
-				)
+			.init(
+				size: GlobalTokens.fontSize(.size300),
+				weight: GlobalTokens.fontWeight(.semibold)
+			)
 		case .body2:
-				.init(
-					size: GlobalTokens.fontSize(.size300),
-					weight: GlobalTokens.fontWeight(.regular)
-				)
+			.init(
+				size: GlobalTokens.fontSize(.size300),
+				weight: GlobalTokens.fontWeight(.regular)
+			)
 		case .caption1Strong:
-				.init(
-					size: GlobalTokens.fontSize(.size200),
-					weight: GlobalTokens.fontWeight(.semibold)
-				)
+			.init(
+				size: GlobalTokens.fontSize(.size200),
+				weight: GlobalTokens.fontWeight(.semibold)
+			)
 		case .caption1:
-				.init(
-					size: GlobalTokens.fontSize(.size200),
-					weight: GlobalTokens.fontWeight(.regular)
-				)
+			.init(
+				size: GlobalTokens.fontSize(.size200),
+				weight: GlobalTokens.fontWeight(.regular)
+			)
 		case .caption2:
-				.init(
-					size: GlobalTokens.fontSize(.size100),
-					weight: GlobalTokens.fontWeight(.regular)
-				)
+			.init(
+				size: GlobalTokens.fontSize(.size100),
+				weight: GlobalTokens.fontWeight(.regular)
+			)
 		}
 	}
 }

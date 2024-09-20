@@ -1,6 +1,7 @@
 import SwiftUI
 
 // MARK: - BrandColor
+
 extension GlobalTokens {
 	public enum BrandColorToken: Int, TokenSetKey {
 		// Communication blue colors
@@ -20,7 +21,7 @@ extension GlobalTokens {
 		case comm140
 		case comm150
 		case comm160
-		
+
 		// Gradient colors
 		case gradientPrimaryLight
 		case gradientPrimaryDark
@@ -29,7 +30,7 @@ extension GlobalTokens {
 		case gradientTertiaryLight
 		case gradientTertiaryDark
 	}
-	
+
 	public static func brandColor(_ token: BrandColorToken) -> Color {
 		switch token {
 		case .comm10: Color(hexValue: 0x061724)

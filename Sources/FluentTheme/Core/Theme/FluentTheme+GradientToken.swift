@@ -5,7 +5,7 @@ extension FluentTheme {
 		case flair
 		case tint
 	}
-	
+
 	/// Returns an array of colors for the given token.
 	///
 	/// - Parameter token: The `GradientTokens` value to be retrieved.
@@ -13,7 +13,7 @@ extension FluentTheme {
 	public func gradient(_ token: GradientToken) -> [Color] {
 		gradientTokenSet[token].map { Color(dynamicColor: $0) }
 	}
-	
+
 	/// Derives its default values from the theme's `colorTokenSet` values
 	static func defaultGradientColor(
 		_ token: GradientToken,

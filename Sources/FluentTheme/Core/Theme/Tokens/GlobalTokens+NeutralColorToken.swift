@@ -56,7 +56,7 @@ extension GlobalTokens {
 		case grey98
 		case white
 	}
-	
+
 	public static func neutralColor(_ token: NeutralColorToken) -> Color {
 		switch token {
 		case .black: Color(hexValue: 0x000000)

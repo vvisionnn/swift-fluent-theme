@@ -11,11 +11,17 @@ let package = Package(
 	products: [
 		.library(name: "FluentTheme", targets: ["FluentTheme"]),
 	],
+	dependencies: [
+		.package(url: "https://github.com/pointfreeco/swift-snapshot-testing", from: "1.17.5"),
+	],
 	targets: [
 		.target(name: "FluentTheme"),
 		.testTarget(
 			name: "FluentThemeTests",
-			dependencies: ["FluentTheme"]
+			dependencies: [
+				.target(name: "FluentTheme"),
+				.product(name: "SnapshotTesting", package: "swift-snapshot-testing"),
+			]
 		),
 	]
 )

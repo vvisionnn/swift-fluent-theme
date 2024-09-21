@@ -20,6 +20,10 @@ extension Binding where Value == FluentTheme {
 		wrappedValue = .init(provider: colorProvider)
 	}
 
+	public func restoreDefaults() {
+		wrappedValue = .init()
+	}
+
 	public func color(_ token: FluentTheme.ColorToken) -> Color {
 		wrappedValue.color(token)
 	}

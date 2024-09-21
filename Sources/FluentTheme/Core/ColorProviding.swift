@@ -4,7 +4,7 @@ import UIKit
 
 /// Protocol through which consumers can provide colors to "theme" their experiences
 /// The view associated with the passed in theme will display the set colors to allow apps to provide different experiences per each view
-public protocol ColorProviding {
+public protocol ColorProviding: Sendable {
 	/// If this protocol is not conformed to, communicationBlue variants will be used
 	var brandBackground1: UIColor { get }
 	var brandBackground1Pressed: UIColor { get }
@@ -30,9 +30,9 @@ public protocol ColorProviding {
 }
 
 extension ColorProviding {
-	var brandGradient1: UIColor? { nil }
-	var brandGradient2: UIColor? { nil }
-	var brandGradient3: UIColor? { nil }
+	public var brandGradient1: UIColor? { nil }
+	public var brandGradient2: UIColor? { nil }
+	public var brandGradient3: UIColor? { nil }
 }
 
 extension FluentTheme {

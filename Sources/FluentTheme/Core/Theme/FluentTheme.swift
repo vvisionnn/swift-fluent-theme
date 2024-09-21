@@ -3,10 +3,10 @@ import SwiftUI
 
 /// Base class that allows for customization of global, alias, and control tokens.
 public struct FluentTheme: Sendable {
-	var colorTokenSet: TokenSet<ColorToken, DynamicColor>
-	var shadowTokenSet: TokenSet<ShadowToken, ShadowInfo>
-	var typographyTokenSet: TokenSet<TypographyToken, FontInfo>
-	var gradientTokenSet: TokenSet<GradientToken, [DynamicColor]>
+	private(set) var colorTokenSet: TokenSet<ColorToken, DynamicColor>
+	private(set) var shadowTokenSet: TokenSet<ShadowToken, ShadowInfo>
+	private(set) var typographyTokenSet: TokenSet<TypographyToken, FontInfo>
+	private(set) var gradientTokenSet: TokenSet<GradientToken, [DynamicColor]>
 
 	public init(
 		colorOverrides: [ColorToken: UIColor]? = nil,
@@ -33,23 +33,5 @@ public struct FluentTheme: Sendable {
 		self.shadowTokenSet = shadowTokenSet
 		self.typographyTokenSet = typographyTokenSet
 		self.gradientTokenSet = gradientTokenSet
-	}
-}
-
-extension FluentTheme {
-	public mutating func restoreDefaults() {
-		let defaultTheme = FluentTheme()
-		colorTokenSet = defaultTheme.colorTokenSet
-		shadowTokenSet = defaultTheme.shadowTokenSet
-		typographyTokenSet = defaultTheme.typographyTokenSet
-		gradientTokenSet = defaultTheme.gradientTokenSet
-	}
-
-	public mutating func update(colors: any ColorProviding) {
-		let newTheme = FluentTheme(provider: colors)
-		colorTokenSet = newTheme.colorTokenSet
-		shadowTokenSet = newTheme.shadowTokenSet
-		typographyTokenSet = newTheme.typographyTokenSet
-		gradientTokenSet = newTheme.gradientTokenSet
 	}
 }

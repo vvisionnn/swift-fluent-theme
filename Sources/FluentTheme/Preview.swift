@@ -1,58 +1,39 @@
 #if DEBUG
 import Foundation
 import SwiftUI
-#if canImport(UIKit)
 import UIKit
-typealias NativeColor = UIColor
-#elseif canImport(AppKit)
-import AppKit
-typealias NativeColor = NSColor
-#endif
 
-struct PreviewHost: View {
-	let purpleFluentTheme = FluentTheme(provider: PreviewColorPurpleTheme())
-	let greenFluentTheme = FluentTheme(provider: PreviewColorGreenTheme())
+struct ThemePresentationView: View {
+	@Environment(\.fluentTheme) var fluentTheme
 
 	var body: some View {
-		VStack {
-			Rectangle()
-				.foregroundStyle(purpleFluentTheme.color(.background1))
-				.overlay {
-					VStack {
-						Button(action: { purpleFluentTheme.update(colors: PreviewColorGreenTheme()) }) {
-							Text("Green")
-						}
-						.tint(purpleFluentTheme.color(.brandBackground1))
-						Button(action: { purpleFluentTheme.restoreDefaults() }) {
-							Text("Restore")
-						}
-						.tint(purpleFluentTheme.color(.brandBackground1))
-					}
+		Rectangle()
+			.ignoresSafeArea()
+			.foregroundStyle(fluentTheme.color(.brandBackground1))
+			.overlay(alignment: .center) {
+				Button(action: {
+					fluentTheme.update(using: PreviewColorGreenTheme())
+				}) {
+					Text("Green")
 				}
-				.environment(\.fluentTheme, purpleFluentTheme)
+			}
+	}
+}
 
-			Rectangle()
-				.foregroundStyle(greenFluentTheme.color(.background1))
-				.overlay {
-					VStack {
-						Button(action: { greenFluentTheme.update(colors: PreviewColorPurpleTheme()) }) {
-							Text("Purple")
-						}
-						.tint(greenFluentTheme.color(.brandBackground1))
-						Button(action: { greenFluentTheme.restoreDefaults() }) {
-							Text("Restore")
-						}
-						.tint(greenFluentTheme.color(.brandBackground1))
-					}
-				}
-				.environment(\.fluentTheme, greenFluentTheme)
+struct PreviewHost: View {
+	var body: some View {
+		VStack(spacing: 0) {
+			ThemePresentationView()
+				.fluentTheme(PreviewColorPurpleTheme())
+			Divider()
+			ThemePresentationView()
 		}
-		.ignoresSafeArea()
 	}
 }
 
 #Preview {
 	PreviewHost()
+		.fluentTheme(.init())
 }
 
 class PreviewColorGreenTheme: NSObject, ColorProviding {
@@ -304,20 +285,11 @@ class PreviewColorPurpleTheme: NSObject, ColorProviding {
 
 extension Color {
 	func hexString(for traitCollection: UITraitCollection? = nil) -> String? {
-		#if canImport(UIKit)
+		typealias NativeColor = UIColor
 		let nativeColor = NativeColor(self)
 		let resolvedColor = nativeColor.resolvedColor(with: traitCollection ?? UITraitCollection.current)
-		#elseif canImport(AppKit)
-		let nativeColor = NSColor(self)
-		let appearance = traitCollection == nil ? NSAppearance
-			.current :
-			(traitCollection!.userInterfaceStyle == .dark ? NSAppearance(named: .darkAqua) : NSAppearance(named: .aqua))
-		let resolvedColor = nativeColor.usingColorSpace(.deviceRGB)?.resolvedColor(appearance: appearance!)
-		#endif
-
-		guard let components = resolvedColor.cgColor.components, components.count >= 3 else {
-			return nil
-		}
+		guard let components = resolvedColor.cgColor.components, components.count >= 3
+		else { return nil }
 
 		let red = components[0]
 		let green = components[1]

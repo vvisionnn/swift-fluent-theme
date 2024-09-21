@@ -2,12 +2,11 @@ import Foundation
 import SwiftUI
 
 /// Base class that allows for customization of global, alias, and control tokens.
-@Observable
-public final class FluentTheme: Sendable {
-	let colorTokenSet: LockIsolated<TokenSet<ColorToken, DynamicColor>>
-	let shadowTokenSet: LockIsolated<TokenSet<ShadowToken, ShadowInfo>>
-	let typographyTokenSet: LockIsolated<TokenSet<TypographyToken, FontInfo>>
-	let gradientTokenSet: LockIsolated<TokenSet<GradientToken, [DynamicColor]>>
+public struct FluentTheme: Sendable {
+	var colorTokenSet: TokenSet<ColorToken, DynamicColor>
+	var shadowTokenSet: TokenSet<ShadowToken, ShadowInfo>
+	var typographyTokenSet: TokenSet<TypographyToken, FontInfo>
+	var gradientTokenSet: TokenSet<GradientToken, [DynamicColor]>
 
 	public init(
 		colorOverrides: [ColorToken: UIColor]? = nil,
@@ -30,27 +29,27 @@ public final class FluentTheme: Sendable {
 			FluentTheme.defaultGradientColor(token, colorTokenSet: colorTokenSet)
 		})
 
-		self.colorTokenSet = .init(colorTokenSet)
-		self.shadowTokenSet = .init(shadowTokenSet)
-		self.typographyTokenSet = .init(typographyTokenSet)
-		self.gradientTokenSet = .init(gradientTokenSet)
+		self.colorTokenSet = colorTokenSet
+		self.shadowTokenSet = shadowTokenSet
+		self.typographyTokenSet = typographyTokenSet
+		self.gradientTokenSet = gradientTokenSet
 	}
 }
 
 extension FluentTheme {
-	public func restoreDefaults() {
+	public mutating func restoreDefaults() {
 		let defaultTheme = FluentTheme()
-		colorTokenSet.withValue { $0 = defaultTheme.colorTokenSet.value }
-		shadowTokenSet.withValue { $0 = defaultTheme.shadowTokenSet.value }
-		typographyTokenSet.withValue { $0 = defaultTheme.typographyTokenSet.value }
-		gradientTokenSet.withValue { $0 = defaultTheme.gradientTokenSet.value }
+		colorTokenSet = defaultTheme.colorTokenSet
+		shadowTokenSet = defaultTheme.shadowTokenSet
+		typographyTokenSet = defaultTheme.typographyTokenSet
+		gradientTokenSet = defaultTheme.gradientTokenSet
 	}
 
-	public func update(colors: any ColorProviding) {
+	public mutating func update(colors: any ColorProviding) {
 		let newTheme = FluentTheme(provider: colors)
-		colorTokenSet.withValue { $0 = newTheme.colorTokenSet.value }
-		shadowTokenSet.withValue { $0 = newTheme.shadowTokenSet.value }
-		typographyTokenSet.withValue { $0 = newTheme.typographyTokenSet.value }
-		gradientTokenSet.withValue { $0 = newTheme.gradientTokenSet.value }
+		colorTokenSet = newTheme.colorTokenSet
+		shadowTokenSet = newTheme.shadowTokenSet
+		typographyTokenSet = newTheme.typographyTokenSet
+		gradientTokenSet = newTheme.gradientTokenSet
 	}
 }

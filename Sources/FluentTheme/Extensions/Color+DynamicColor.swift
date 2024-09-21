@@ -21,18 +21,30 @@ extension Color {
 	/// - Parameter light: The default `Color` for a light context. Required.
 	/// - Parameter dark: The override `Color` for a dark context. Optional.
 	/// - Parameter darkElevated: The override `Color` for a dark elevated context. Optional.
-	init(light: Color, dark: Color? = nil, darkElevated: Color? = nil) {
+	init(
+		light: Color,
+		dark: Color? = nil,
+		darkElevated: Color? = nil
+	) {
 		let dynamicColor = DynamicColor(light: light, dark: dark, darkElevated: darkElevated)
-		self.init(dynamicColor)
+		if #available(iOS 17, *) {
+			self.init(dynamicColor)
+		} else {
+			self.init(uiColor: UIColor(dynamicColor: dynamicColor))
+		}
 	}
 
 	init(dynamicColor: DynamicColor) {
-		self.init(dynamicColor)
+		if #available(iOS 17, *) {
+			self.init(dynamicColor)
+		} else {
+			self.init(uiColor: UIColor(dynamicColor: dynamicColor))
+		}
 	}
 }
 
 /// A container that stores a dynamic set of `Color` values.
-struct DynamicColor: Hashable {
+struct DynamicColor: Hashable, Sendable {
 	let light: Color
 	let dark: Color?
 	let darkElevated: Color?

@@ -1,23 +1,38 @@
 import SwiftUI
 
+extension FluentTheme {
+	enum EnvKey {}
+}
+
+extension FluentTheme.EnvKey: EnvironmentKey {
+	static let defaultValue: Binding<FluentTheme> = .constant(.init())
+}
+
 extension EnvironmentValues {
-	public var fluentTheme: FluentTheme {
+	public var fluentTheme: Binding<FluentTheme> {
 		get { self[FluentTheme.EnvKey.self] }
 		set { self[FluentTheme.EnvKey.self] = newValue }
 	}
 }
 
-extension FluentTheme {
-	enum EnvKey: EnvironmentKey {
-		static let defaultValue: FluentTheme = .init()
+extension Binding where Value == FluentTheme {
+	public func update(using colorProvider: any ColorProviding) {
+		wrappedValue = .init(provider: colorProvider)
 	}
-}
 
-extension View {
-	/// Sets a custom theme for a specific SwiftUI View and its view hierarchy.
-	/// - Parameter fluentTheme: Instance of the custom theme.
-	/// - Returns: The view with its `fluentTheme` environment value overriden.
-	public func fluentTheme(_ fluentTheme: FluentTheme) -> some View {
-		environment(\.fluentTheme, fluentTheme)
+	public func color(_ token: FluentTheme.ColorToken) -> Color {
+		wrappedValue.color(token)
+	}
+
+	public func gradient(_ token: FluentTheme.GradientToken) -> [Color] {
+		wrappedValue.gradient(token)
+	}
+
+	public func shadow(_ token: FluentTheme.ShadowToken) -> ShadowInfo {
+		wrappedValue.shadow(token)
+	}
+
+	public func typography(_ token: FluentTheme.TypographyToken, adjustsForContentSizeCategory: Bool = true) -> UIFont {
+		wrappedValue.typography(token, adjustsForContentSizeCategory: adjustsForContentSizeCategory)
 	}
 }

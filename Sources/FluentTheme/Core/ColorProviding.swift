@@ -36,7 +36,7 @@ extension ColorProviding {
 }
 
 extension FluentTheme {
-	public convenience init(provider: any ColorProviding) {
+	public init(provider: any ColorProviding) {
 		self.init(colorOverrides: Self.brandColorOverrides(provider: provider))
 	}
 

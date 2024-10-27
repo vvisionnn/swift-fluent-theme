@@ -21,7 +21,10 @@ public struct FluentTheme: Sendable {
 		let mappedColorOverrides = colorOverrides?
 			.compactMapValues { color in DynamicColor(uiColor: color) }
 
-		let defaultColorFunction: (@Sendable (FluentTheme.ColorToken) -> DynamicColor) = FluentTheme.defaultColor(_:)
+		let defaultColorFunction: (@Sendable (FluentTheme.ColorToken) -> DynamicColor) = {
+			FluentTheme.defaultColor($0, disableDarkElevated: true)
+		}
+
 		let colorTokenSet = TokenSet<ColorToken, DynamicColor>(defaultColorFunction, mappedColorOverrides)
 		let shadowTokenSet = TokenSet<ShadowToken, ShadowInfo>(FluentTheme.defaultShadow(_:), shadowOverrides)
 		let typographyTokenSet = TokenSet<TypographyToken, FontInfo>(FluentTheme.defaultTypography(_:), mappedTypographyOverrides)

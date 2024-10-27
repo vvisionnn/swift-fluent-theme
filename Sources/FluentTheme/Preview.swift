@@ -15,6 +15,7 @@ struct ThemePresentationView: View {
 					fluentTheme.update(using: .green)
 				}) {
 					Text("Green")
+						.foregroundStyle(fluentTheme.color(.foreground1))
 				}
 			}
 	}
@@ -29,6 +30,32 @@ struct PreviewHost: View {
 			ThemePresentationView()
 		}
 	}
+}
+
+struct PresentationHost: View {
+	@Environment(\.fluentTheme) var fluentTheme
+	var body: some View {
+		Rectangle()
+			.foregroundStyle(fluentTheme.color(.backgroundCanvas))
+			.ignoresSafeArea()
+			.sheet(isPresented: .constant(true)) {
+				PresentationChildView()
+			}
+	}
+}
+
+struct PresentationChildView: View {
+	@Environment(\.fluentTheme) var fluentTheme
+	var body: some View {
+		Rectangle()
+			.foregroundStyle(fluentTheme.color(.backgroundCanvas))
+			.ignoresSafeArea()
+	}
+}
+
+#Preview {
+	PresentationHost()
+		.fluentTheme(.init())
 }
 
 #Preview {

@@ -114,7 +114,7 @@ extension FluentTheme {
 		Color(dynamicColor: colorTokenSet[token])
 	}
 
-	static func defaultColor(_ token: FluentTheme.ColorToken) -> DynamicColor {
+	static func defaultColor(_ token: FluentTheme.ColorToken, disableDarkElevated: Bool = true) -> DynamicColor {
 		switch token {
 		case .foreground1:
 			DynamicColor(
@@ -205,103 +205,103 @@ extension FluentTheme {
 			DynamicColor(
 				light: GlobalTokens.neutralColor(.white),
 				dark: GlobalTokens.neutralColor(.black),
-				darkElevated: GlobalTokens.neutralColor(.grey4)
+				darkElevated: disableDarkElevated ? nil : GlobalTokens.neutralColor(.grey4)
 			)
 		case .background1Pressed:
 			DynamicColor(
 				light: GlobalTokens.neutralColor(.grey88),
 				dark: GlobalTokens.neutralColor(.grey18),
-				darkElevated: GlobalTokens.neutralColor(.grey18)
+				darkElevated: disableDarkElevated ? nil : GlobalTokens.neutralColor(.grey18)
 			)
 		case .background1Selected:
 			DynamicColor(
 				light: GlobalTokens.neutralColor(.grey92),
 				dark: GlobalTokens.neutralColor(.grey14),
-				darkElevated: GlobalTokens.neutralColor(.grey14)
+				darkElevated: disableDarkElevated ? nil : GlobalTokens.neutralColor(.grey14)
 			)
 		case .background2:
 			DynamicColor(
 				light: GlobalTokens.neutralColor(.white),
 				dark: GlobalTokens.neutralColor(.grey12),
-				darkElevated: GlobalTokens.neutralColor(.grey16)
+				darkElevated: disableDarkElevated ? nil : GlobalTokens.neutralColor(.grey16)
 			)
 		case .background2Pressed:
 			DynamicColor(
 				light: GlobalTokens.neutralColor(.grey88),
 				dark: GlobalTokens.neutralColor(.grey30),
-				darkElevated: GlobalTokens.neutralColor(.grey30)
+				darkElevated: disableDarkElevated ? nil : GlobalTokens.neutralColor(.grey30)
 			)
 		case .background2Selected:
 			DynamicColor(
 				light: GlobalTokens.neutralColor(.grey92),
 				dark: GlobalTokens.neutralColor(.grey26),
-				darkElevated: GlobalTokens.neutralColor(.grey26)
+				darkElevated: disableDarkElevated ? nil : GlobalTokens.neutralColor(.grey26)
 			)
 		case .background3:
 			DynamicColor(
 				light: GlobalTokens.neutralColor(.white),
 				dark: GlobalTokens.neutralColor(.grey16),
-				darkElevated: GlobalTokens.neutralColor(.grey20)
+				darkElevated: disableDarkElevated ? nil : GlobalTokens.neutralColor(.grey20)
 			)
 		case .background3Pressed:
 			DynamicColor(
 				light: GlobalTokens.neutralColor(.grey88),
 				dark: GlobalTokens.neutralColor(.grey34),
-				darkElevated: GlobalTokens.neutralColor(.grey34)
+				darkElevated: disableDarkElevated ? nil : GlobalTokens.neutralColor(.grey34)
 			)
 		case .background3Selected:
 			DynamicColor(
 				light: GlobalTokens.neutralColor(.grey92),
 				dark: GlobalTokens.neutralColor(.grey30),
-				darkElevated: GlobalTokens.neutralColor(.grey30)
+				darkElevated: disableDarkElevated ? nil : GlobalTokens.neutralColor(.grey30)
 			)
 		case .background4:
 			DynamicColor(
 				light: GlobalTokens.neutralColor(.grey98),
 				dark: GlobalTokens.neutralColor(.grey20),
-				darkElevated: GlobalTokens.neutralColor(.grey24)
+				darkElevated: disableDarkElevated ? nil : GlobalTokens.neutralColor(.grey24)
 			)
 		case .background4Pressed:
 			DynamicColor(
 				light: GlobalTokens.neutralColor(.grey86),
 				dark: GlobalTokens.neutralColor(.grey38),
-				darkElevated: GlobalTokens.neutralColor(.grey38)
+				darkElevated: disableDarkElevated ? nil : GlobalTokens.neutralColor(.grey38)
 			)
 		case .background4Selected:
 			DynamicColor(
 				light: GlobalTokens.neutralColor(.grey90),
 				dark: GlobalTokens.neutralColor(.grey34),
-				darkElevated: GlobalTokens.neutralColor(.grey34)
+				darkElevated: disableDarkElevated ? nil : GlobalTokens.neutralColor(.grey34)
 			)
 		case .background5:
 			DynamicColor(
 				light: GlobalTokens.neutralColor(.grey94),
 				dark: GlobalTokens.neutralColor(.grey24),
-				darkElevated: GlobalTokens.neutralColor(.grey28)
+				darkElevated: disableDarkElevated ? nil : GlobalTokens.neutralColor(.grey28)
 			)
 		case .background5Pressed:
 			DynamicColor(
 				light: GlobalTokens.neutralColor(.grey82),
 				dark: GlobalTokens.neutralColor(.grey42),
-				darkElevated: GlobalTokens.neutralColor(.grey42)
+				darkElevated: disableDarkElevated ? nil : GlobalTokens.neutralColor(.grey42)
 			)
 		case .background5Selected:
 			DynamicColor(
 				light: GlobalTokens.neutralColor(.grey86),
 				dark: GlobalTokens.neutralColor(.grey38),
-				darkElevated: GlobalTokens.neutralColor(.grey38)
+				darkElevated: disableDarkElevated ? nil : GlobalTokens.neutralColor(.grey38)
 			)
 		case .background6:
 			DynamicColor(
 				light: GlobalTokens.neutralColor(.grey82),
 				dark: GlobalTokens.neutralColor(.grey36),
-				darkElevated: GlobalTokens.neutralColor(.grey40)
+				darkElevated: disableDarkElevated ? nil : GlobalTokens.neutralColor(.grey40)
 			)
 		case .backgroundDisabled:
 			DynamicColor(
 				light: GlobalTokens.neutralColor(.grey88),
 				dark: GlobalTokens.neutralColor(.grey32),
-				darkElevated: GlobalTokens.neutralColor(.grey32)
+				darkElevated: disableDarkElevated ? nil : GlobalTokens.neutralColor(.grey32)
 			)
 		case .brandBackgroundTint:
 			DynamicColor(
@@ -343,103 +343,103 @@ extension FluentTheme {
 			DynamicColor(
 				light: GlobalTokens.neutralColor(.grey90),
 				dark: GlobalTokens.neutralColor(.grey34),
-				darkElevated: GlobalTokens.neutralColor(.grey40)
+				darkElevated: disableDarkElevated ? nil : GlobalTokens.neutralColor(.grey40)
 			)
 		case .stencil2:
 			DynamicColor(
 				light: GlobalTokens.neutralColor(.grey98),
 				dark: GlobalTokens.neutralColor(.grey20),
-				darkElevated: GlobalTokens.neutralColor(.grey26)
+				darkElevated: disableDarkElevated ? nil : GlobalTokens.neutralColor(.grey26)
 			)
 		case .backgroundCanvas:
 			DynamicColor(
 				light: GlobalTokens.neutralColor(.grey96),
 				dark: GlobalTokens.neutralColor(.grey8),
-				darkElevated: GlobalTokens.neutralColor(.grey14)
+				darkElevated: disableDarkElevated ? nil : GlobalTokens.neutralColor(.grey14)
 			)
 		case .backgroundDarkStatic:
 			DynamicColor(
 				light: GlobalTokens.neutralColor(.grey14),
 				dark: GlobalTokens.neutralColor(.grey24),
-				darkElevated: GlobalTokens.neutralColor(.grey30)
+				darkElevated: disableDarkElevated ? nil : GlobalTokens.neutralColor(.grey30)
 			)
 		case .backgroundInverted:
 			DynamicColor(
 				light: GlobalTokens.neutralColor(.grey46),
 				dark: GlobalTokens.neutralColor(.grey72),
-				darkElevated: GlobalTokens.neutralColor(.grey78)
+				darkElevated: disableDarkElevated ? nil : GlobalTokens.neutralColor(.grey78)
 			)
 		case .backgroundLightStatic:
 			DynamicColor(
 				light: GlobalTokens.neutralColor(.white),
 				dark: GlobalTokens.neutralColor(.white),
-				darkElevated: GlobalTokens.neutralColor(.white)
+				darkElevated: disableDarkElevated ? nil : GlobalTokens.neutralColor(.white)
 			)
 		case .backgroundLightStaticDisabled:
 			DynamicColor(
 				light: GlobalTokens.neutralColor(.white),
 				dark: GlobalTokens.neutralColor(.grey68),
-				darkElevated: GlobalTokens.neutralColor(.grey74)
+				darkElevated: disableDarkElevated ? nil : GlobalTokens.neutralColor(.grey74)
 			)
 		case .stroke1:
 			DynamicColor(
 				light: GlobalTokens.neutralColor(.grey82),
 				dark: GlobalTokens.neutralColor(.grey30),
-				darkElevated: GlobalTokens.neutralColor(.grey30)
+				darkElevated: disableDarkElevated ? nil : GlobalTokens.neutralColor(.grey30)
 			)
 		case .stroke1Pressed:
 			DynamicColor(
 				light: GlobalTokens.neutralColor(.grey70),
 				dark: GlobalTokens.neutralColor(.grey48),
-				darkElevated: GlobalTokens.neutralColor(.grey48)
+				darkElevated: disableDarkElevated ? nil : GlobalTokens.neutralColor(.grey48)
 			)
 		case .stroke2:
 			DynamicColor(
 				light: GlobalTokens.neutralColor(.grey88),
 				dark: GlobalTokens.neutralColor(.grey24),
-				darkElevated: GlobalTokens.neutralColor(.grey24)
+				darkElevated: disableDarkElevated ? nil : GlobalTokens.neutralColor(.grey24)
 			)
 		case .strokeAccessible:
 			DynamicColor(
 				light: GlobalTokens.neutralColor(.grey38),
 				dark: GlobalTokens.neutralColor(.grey62),
-				darkElevated: GlobalTokens.neutralColor(.grey62)
+				darkElevated: disableDarkElevated ? nil : GlobalTokens.neutralColor(.grey62)
 			)
 		case .strokeFocus1:
 			DynamicColor(
 				light: GlobalTokens.neutralColor(.white),
 				dark: GlobalTokens.neutralColor(.black),
-				darkElevated: GlobalTokens.neutralColor(.black)
+				darkElevated: disableDarkElevated ? nil : GlobalTokens.neutralColor(.black)
 			)
 		case .strokeFocus2:
 			DynamicColor(
 				light: GlobalTokens.neutralColor(.black),
 				dark: GlobalTokens.neutralColor(.white),
-				darkElevated: GlobalTokens.neutralColor(.white)
+				darkElevated: disableDarkElevated ? nil : GlobalTokens.neutralColor(.white)
 			)
 		case .strokeDisabled:
 			DynamicColor(
 				light: GlobalTokens.neutralColor(.grey88),
 				dark: GlobalTokens.neutralColor(.grey26),
-				darkElevated: GlobalTokens.neutralColor(.grey26)
+				darkElevated: disableDarkElevated ? nil : GlobalTokens.neutralColor(.grey26)
 			)
 		case .brandStroke1:
 			DynamicColor(
 				light: GlobalTokens.brandColor(.comm80),
 				dark: GlobalTokens.brandColor(.comm100),
-				darkElevated: GlobalTokens.brandColor(.comm100)
+				darkElevated: disableDarkElevated ? nil : GlobalTokens.brandColor(.comm100)
 			)
 		case .brandStroke1Pressed:
 			DynamicColor(
 				light: GlobalTokens.brandColor(.comm50),
 				dark: GlobalTokens.brandColor(.comm130),
-				darkElevated: GlobalTokens.brandColor(.comm130)
+				darkElevated: disableDarkElevated ? nil : GlobalTokens.brandColor(.comm130)
 			)
 		case .brandStroke1Selected:
 			DynamicColor(
 				light: GlobalTokens.brandColor(.comm60),
 				dark: GlobalTokens.brandColor(.comm120),
-				darkElevated: GlobalTokens.brandColor(.comm120)
+				darkElevated: disableDarkElevated ? nil : GlobalTokens.brandColor(.comm120)
 			)
 		case .dangerBackground1:
 			DynamicColor(

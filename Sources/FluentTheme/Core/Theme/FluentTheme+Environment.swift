@@ -27,6 +27,10 @@ extension Binding where Value == FluentTheme {
 	public func color(_ token: FluentTheme.ColorToken) -> Color {
 		wrappedValue.color(token)
 	}
+	
+	public func uiColor(_ token: FluentTheme.ColorToken) -> UIColor {
+		wrappedValue.uiColor(token)
+	}
 
 	public func gradient(_ token: FluentTheme.GradientToken) -> [Color] {
 		wrappedValue.gradient(token)

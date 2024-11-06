@@ -114,6 +114,14 @@ extension FluentTheme {
 		Color(dynamicColor: colorTokenSet[token])
 	}
 
+	/// Returns the color value for the given token.
+	///
+	/// - Parameter token: The `ColorsTokens` value to be retrieved.
+	/// - Returns: A `UIColor` for the given token.
+	public func uiColor(_ token: ColorToken) -> UIColor {
+		UIColor(dynamicColor: colorTokenSet[token])
+	}
+
 	static func defaultColor(_ token: FluentTheme.ColorToken, disableDarkElevated: Bool = true) -> DynamicColor {
 		switch token {
 		case .foreground1:

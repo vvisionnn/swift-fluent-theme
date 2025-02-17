@@ -6,18 +6,18 @@ import Foundation
 /// If you trust the sendability of the underlying value, consider using ``UncheckedSendable``,
 /// instead.
 @dynamicMemberLookup
-public final class LockIsolated<Value>: @unchecked Sendable {
+final class LockIsolated<Value>: @unchecked Sendable {
 	private var _value: Value
 	private let lock = NSRecursiveLock()
 
 	/// Initializes lock-isolated state around a value.
 	///
 	/// - Parameter value: A value to isolate with a lock.
-	public init(_ value: @autoclosure @Sendable () throws -> Value) rethrows {
+	init(_ value: @autoclosure @Sendable () throws -> Value) rethrows {
 		self._value = try value()
 	}
 
-	public subscript<Subject: Sendable>(dynamicMember keyPath: KeyPath<Value, Subject>) -> Subject {
+	subscript<Subject: Sendable>(dynamicMember keyPath: KeyPath<Value, Subject>) -> Subject {
 		self.lock.sync {
 			self._value[keyPath: keyPath]
 		}
@@ -39,7 +39,7 @@ public final class LockIsolated<Value>: @unchecked Sendable {
 	///
 	/// - Parameter operation: An operation to be performed on the the underlying value with a lock.
 	/// - Returns: The result of the operation.
-	public func withValue<T: Sendable>(
+	func withValue<T: Sendable>(
 		_ operation: @Sendable (inout Value) throws -> T
 	) rethrows -> T {
 		try self.lock.sync {
@@ -78,7 +78,7 @@ public final class LockIsolated<Value>: @unchecked Sendable {
 	/// > writing the value.
 	///
 	/// - Parameter newValue: The value to replace the current isolated value with.
-	public func setValue(_ newValue: @autoclosure @Sendable () throws -> Value) rethrows {
+	func setValue(_ newValue: @autoclosure @Sendable () throws -> Value) rethrows {
 		try self.lock.sync {
 			self._value = try newValue()
 		}
@@ -87,7 +87,7 @@ public final class LockIsolated<Value>: @unchecked Sendable {
 
 extension LockIsolated where Value: Sendable {
 	/// The lock-isolated value.
-	public var value: Value {
+	var value: Value {
 		self.lock.sync {
 			self._value
 		}
@@ -97,14 +97,14 @@ extension LockIsolated where Value: Sendable {
 #if swift(<6)
 @available(*, deprecated, message: "Lock isolated values should not be equatable")
 extension LockIsolated: Equatable where Value: Equatable {
-	public static func == (lhs: LockIsolated, rhs: LockIsolated) -> Bool {
+	static func == (lhs: LockIsolated, rhs: LockIsolated) -> Bool {
 		lhs.value == rhs.value
 	}
 }
 
 @available(*, deprecated, message: "Lock isolated values should not be hashable")
 extension LockIsolated: Hashable where Value: Hashable {
-	public func hash(into hasher: inout Hasher) {
+	func hash(into hasher: inout Hasher) {
 		hasher.combine(value)
 	}
 }

@@ -1,5 +1,6 @@
 [tools]
 swiftformat = "latest"
+node = "22"
 
 [settings]
 jobs = 6

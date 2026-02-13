@@ -40,7 +40,7 @@ extension Binding where Value == FluentTheme {
 		wrappedValue.shadow(token)
 	}
 
-	public func typography(_ token: FluentTheme.TypographyToken, adjustsForContentSizeCategory: Bool = true) -> UIFont {
-		wrappedValue.typography(token, adjustsForContentSizeCategory: adjustsForContentSizeCategory)
+	public func typography(_ token: FluentTheme.TypographyToken, adjustsForContentSizeCategory: Bool = true) -> Font {
+		Font.fluent(wrappedValue.typographyTokenSet[token], shouldScale: adjustsForContentSizeCategory)
 	}
 }

@@ -48,11 +48,24 @@ extension FontInfo {
 // MARK: - ViewModifier
 
 extension Font {
+	/// Creates a SwiftUI `Font` from a `FontInfo` that responds to Dynamic Type changes.
+	///
+	/// For system fonts with scaling enabled, this uses `Font.system(_:weight:)` which
+	/// SwiftUI automatically scales with Dynamic Type. For named fonts, it uses
+	/// `Font.custom(_:size:relativeTo:)`.
 	public static func fluent(_ fontInfo: FontInfo, shouldScale: Bool = true) -> Font {
-		// SwiftUI Font is missing some of the ease of construction available in UIFont.
-		// So just leverage the logic there to create the equivalent SwiftUI font.
-		let uiFont = UIFont.fluent(fontInfo, shouldScale: shouldScale)
-		return Font(uiFont)
+		if let name = fontInfo.name {
+			if shouldScale {
+				return Font.custom(name, size: fontInfo.size, relativeTo: fontInfo.textStyle)
+					.weight(fontInfo.weight)
+			}
+			return Font.custom(name, fixedSize: fontInfo.size)
+				.weight(fontInfo.weight)
+		}
+		if shouldScale {
+			return .system(fontInfo.textStyle, weight: fontInfo.weight)
+		}
+		return .system(size: fontInfo.size, weight: fontInfo.weight)
 	}
 }
 

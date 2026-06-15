@@ -1,0 +1,26 @@
+name: Release
+
+# Tag pushes (e.g. 0.0.8) build and test first, then publish a GitHub Release
+# only if that succeeds. Build/test is the reusable CI workflow, so the gate is
+# the exact same checks that run on every push.
+on:
+  push:
+    tags: ['*']
+
+jobs:
+  verify:
+    uses: ./.github/workflows/ci.yml
+
+  release:
+    name: Publish release
+    needs: verify
+    runs-on: macos-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Create GitHub Release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh release create "$GITHUB_REF_NAME" --repo "$GITHUB_REPOSITORY" --title "$GITHUB_REF_NAME" --notes ""

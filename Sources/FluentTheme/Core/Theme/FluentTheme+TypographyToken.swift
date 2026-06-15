@@ -1,4 +1,9 @@
 import SwiftUI
+#if canImport(UIKit)
+import UIKit
+#elseif canImport(AppKit)
+import AppKit
+#endif
 
 extension FluentTheme {
 	public enum TypographyToken: Int, TokenSetKey {
@@ -16,6 +21,7 @@ extension FluentTheme {
 		case caption2
 	}
 
+	#if canImport(UIKit)
 	/// Returns the font value for the given token.
 	///
 	/// - Parameter token: The `TypographyTokens` value to be retrieved.
@@ -45,6 +51,18 @@ extension FluentTheme {
 			contentSizeCategory: contentSizeCategory
 		)
 	}
+
+	#elseif canImport(AppKit)
+	/// Returns the font value for the given token.
+	///
+	/// macOS has no Dynamic Type, so the font is produced at its fixed point size.
+	///
+	/// - Parameter token: The `TypographyTokens` value to be retrieved.
+	/// - Returns: An `NSFont` for the given token.
+	public func font(_ token: TypographyToken) -> NSFont {
+		NSFont.fluent(typographyTokenSet[token])
+	}
+	#endif
 
 	static func defaultTypography(_ token: TypographyToken) -> FontInfo {
 		switch token {

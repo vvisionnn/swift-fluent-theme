@@ -1,11 +1,16 @@
 import CoreGraphics
 import Foundation
 import SwiftUI
+#if canImport(UIKit)
+import UIKit
+#elseif canImport(AppKit)
+import AppKit
+#endif
 
 /// Represents a linear gradient as used by FluentUI.
 public struct LinearGradientInfo: Sendable {
 	/// The array of colors to apply to this linear gradient.
-	public let colors: [UIColor]
+	public let colors: [PlatformColor]
 
 	/// An optional array of values defining the location of each gradient stop.
 	///
@@ -26,7 +31,7 @@ public struct LinearGradientInfo: Sendable {
 	///   - startPoint: The starting point for this gradient. Values should range from 0.0 to 1.0.
 	///   - endPoint: The ending point for this gradient. Values should range from 0.0 to 1.0.
 	public init(
-		colors: [UIColor],
+		colors: [PlatformColor],
 		locations: [CGFloat]? = nil,
 		startPoint: CGPoint,
 		endPoint: CGPoint

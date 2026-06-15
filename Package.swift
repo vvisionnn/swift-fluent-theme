@@ -6,7 +6,8 @@ import PackageDescription
 let package = Package(
 	name: "swift-fluent-theme",
 	platforms: [
-		.iOS(.v16),
+		.iOS(.v17),
+		.macOS(.v14),
 	],
 	products: [
 		.library(name: "FluentTheme", targets: ["FluentTheme"]),

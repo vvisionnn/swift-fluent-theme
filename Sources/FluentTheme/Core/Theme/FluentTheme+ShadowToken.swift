@@ -1,4 +1,9 @@
 import SwiftUI
+#if canImport(UIKit)
+import UIKit
+#elseif canImport(AppKit)
+import AppKit
+#endif
 
 extension FluentTheme {
 	public enum ShadowToken: Int, TokenSetKey {
@@ -34,16 +39,16 @@ extension FluentTheme {
 			)
 		case .shadow02:
 			ShadowInfo(
-				keyColor: UIColor(
-					light: UIColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 0.14),
-					dark: UIColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 0.28)
+				keyColor: PlatformColor(
+					light: PlatformColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 0.14),
+					dark: PlatformColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 0.28)
 				),
 				keyBlur: 2,
 				xKey: 0,
 				yKey: 1,
-				ambientColor: UIColor(
-					light: UIColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 0.12),
-					dark: UIColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 0.20)
+				ambientColor: PlatformColor(
+					light: PlatformColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 0.12),
+					dark: PlatformColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 0.20)
 				),
 				ambientBlur: 2,
 				xAmbient: 0,
@@ -51,16 +56,16 @@ extension FluentTheme {
 			)
 		case .shadow04:
 			ShadowInfo(
-				keyColor: UIColor(
-					light: UIColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 0.14),
-					dark: UIColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 0.28)
+				keyColor: PlatformColor(
+					light: PlatformColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 0.14),
+					dark: PlatformColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 0.28)
 				),
 				keyBlur: 4,
 				xKey: 0,
 				yKey: 2,
-				ambientColor: UIColor(
-					light: UIColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 0.12),
-					dark: UIColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 0.20)
+				ambientColor: PlatformColor(
+					light: PlatformColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 0.12),
+					dark: PlatformColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 0.20)
 				),
 				ambientBlur: 2,
 				xAmbient: 0,
@@ -68,16 +73,16 @@ extension FluentTheme {
 			)
 		case .shadow08:
 			ShadowInfo(
-				keyColor: UIColor(
-					light: UIColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 0.14),
-					dark: UIColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 0.28)
+				keyColor: PlatformColor(
+					light: PlatformColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 0.14),
+					dark: PlatformColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 0.28)
 				),
 				keyBlur: 8,
 				xKey: 0,
 				yKey: 4,
-				ambientColor: UIColor(
-					light: UIColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 0.12),
-					dark: UIColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 0.20)
+				ambientColor: PlatformColor(
+					light: PlatformColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 0.12),
+					dark: PlatformColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 0.20)
 				),
 				ambientBlur: 2,
 				xAmbient: 0,
@@ -85,16 +90,16 @@ extension FluentTheme {
 			)
 		case .shadow16:
 			ShadowInfo(
-				keyColor: UIColor(
-					light: UIColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 0.14),
-					dark: UIColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 0.28)
+				keyColor: PlatformColor(
+					light: PlatformColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 0.14),
+					dark: PlatformColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 0.28)
 				),
 				keyBlur: 16,
 				xKey: 0,
 				yKey: 8,
-				ambientColor: UIColor(
-					light: UIColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 0.12),
-					dark: UIColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 0.20)
+				ambientColor: PlatformColor(
+					light: PlatformColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 0.12),
+					dark: PlatformColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 0.20)
 				),
 				ambientBlur: 2,
 				xAmbient: 0,
@@ -102,16 +107,16 @@ extension FluentTheme {
 			)
 		case .shadow28:
 			ShadowInfo(
-				keyColor: UIColor(
-					light: UIColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 0.24),
-					dark: UIColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 0.48)
+				keyColor: PlatformColor(
+					light: PlatformColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 0.24),
+					dark: PlatformColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 0.48)
 				),
 				keyBlur: 28,
 				xKey: 0,
 				yKey: 14,
-				ambientColor: UIColor(
-					light: UIColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 0.20),
-					dark: UIColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 0.40)
+				ambientColor: PlatformColor(
+					light: PlatformColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 0.20),
+					dark: PlatformColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 0.40)
 				),
 				ambientBlur: 8,
 				xAmbient: 0,
@@ -119,16 +124,16 @@ extension FluentTheme {
 			)
 		case .shadow64:
 			ShadowInfo(
-				keyColor: UIColor(
-					light: UIColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 0.24),
-					dark: UIColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 0.48)
+				keyColor: PlatformColor(
+					light: PlatformColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 0.24),
+					dark: PlatformColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 0.48)
 				),
 				keyBlur: 64,
 				xKey: 0,
 				yKey: 32,
-				ambientColor: UIColor(
-					light: UIColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 0.20),
-					dark: UIColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 0.40)
+				ambientColor: PlatformColor(
+					light: PlatformColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 0.20),
+					dark: PlatformColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 0.40)
 				),
 				ambientBlur: 8,
 				xAmbient: 0,

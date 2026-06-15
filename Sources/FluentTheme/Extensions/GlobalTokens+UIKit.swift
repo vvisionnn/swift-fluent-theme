@@ -1,3 +1,4 @@
+#if canImport(UIKit)
 import UIKit
 
 extension GlobalTokens {
@@ -19,3 +20,4 @@ extension GlobalTokens {
 		UIColor(GlobalTokens.sharedColor(sharedColor, token))
 	}
 }
+#endif

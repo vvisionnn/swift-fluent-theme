@@ -69,6 +69,7 @@ extension Font {
 	}
 }
 
+#if canImport(UIKit)
 extension UIFont {
 	public static func fluent(_ fontInfo: FontInfo, shouldScale: Bool = true) -> UIFont {
 		fluent(fontInfo, shouldScale: shouldScale, contentSizeCategory: nil)
@@ -194,3 +195,4 @@ extension UIFont {
 		}
 	}
 }
+#endif

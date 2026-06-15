@@ -1,4 +1,8 @@
+#if canImport(UIKit)
 import UIKit
+#elseif canImport(AppKit)
+import AppKit
+#endif
 
 // MARK: any ColorProviding
 
@@ -6,33 +10,33 @@ import UIKit
 /// The view associated with the passed in theme will display the set colors to allow apps to provide different experiences per each view
 public protocol ColorProviding: Sendable {
 	/// If this protocol is not conformed to, communicationBlue variants will be used
-	var brandBackground1: UIColor { get }
-	var brandBackground1Pressed: UIColor { get }
-	var brandBackground1Selected: UIColor { get }
-	var brandBackground2: UIColor { get }
-	var brandBackground2Pressed: UIColor { get }
-	var brandBackground2Selected: UIColor { get }
-	var brandBackground3: UIColor { get }
-	var brandBackgroundTint: UIColor { get }
-	var brandBackgroundDisabled: UIColor { get }
-	var brandForeground1: UIColor { get }
-	var brandForeground1Pressed: UIColor { get }
-	var brandForeground1Selected: UIColor { get }
-	var brandForegroundTint: UIColor { get }
-	var brandForegroundDisabled1: UIColor { get }
-	var brandForegroundDisabled2: UIColor { get }
-	var brandStroke1: UIColor { get }
-	var brandStroke1Pressed: UIColor { get }
-	var brandStroke1Selected: UIColor { get }
-	var brandGradient1: UIColor? { get }
-	var brandGradient2: UIColor? { get }
-	var brandGradient3: UIColor? { get }
+	var brandBackground1: PlatformColor { get }
+	var brandBackground1Pressed: PlatformColor { get }
+	var brandBackground1Selected: PlatformColor { get }
+	var brandBackground2: PlatformColor { get }
+	var brandBackground2Pressed: PlatformColor { get }
+	var brandBackground2Selected: PlatformColor { get }
+	var brandBackground3: PlatformColor { get }
+	var brandBackgroundTint: PlatformColor { get }
+	var brandBackgroundDisabled: PlatformColor { get }
+	var brandForeground1: PlatformColor { get }
+	var brandForeground1Pressed: PlatformColor { get }
+	var brandForeground1Selected: PlatformColor { get }
+	var brandForegroundTint: PlatformColor { get }
+	var brandForegroundDisabled1: PlatformColor { get }
+	var brandForegroundDisabled2: PlatformColor { get }
+	var brandStroke1: PlatformColor { get }
+	var brandStroke1Pressed: PlatformColor { get }
+	var brandStroke1Selected: PlatformColor { get }
+	var brandGradient1: PlatformColor? { get }
+	var brandGradient2: PlatformColor? { get }
+	var brandGradient3: PlatformColor? { get }
 }
 
 extension ColorProviding {
-	public var brandGradient1: UIColor? { nil }
-	public var brandGradient2: UIColor? { nil }
-	public var brandGradient3: UIColor? { nil }
+	public var brandGradient1: PlatformColor? { nil }
+	public var brandGradient2: PlatformColor? { nil }
+	public var brandGradient3: PlatformColor? { nil }
 }
 
 extension FluentTheme {
@@ -40,8 +44,8 @@ extension FluentTheme {
 		self.init(colorOverrides: Self.brandColorOverrides(provider: provider))
 	}
 
-	private static func brandColorOverrides(provider: any ColorProviding) -> [FluentTheme.ColorToken: UIColor] {
-		var brandColors: [FluentTheme.ColorToken: UIColor] = [:]
+	private static func brandColorOverrides(provider: any ColorProviding) -> [FluentTheme.ColorToken: PlatformColor] {
+		var brandColors: [FluentTheme.ColorToken: PlatformColor] = [:]
 		brandColors[.brandBackground1] = provider.brandBackground1
 		brandColors[.brandBackground1Pressed] = provider.brandBackground1Pressed
 		brandColors[.brandBackground1Selected] = provider.brandBackground1Selected

@@ -1,3 +1,4 @@
+#if canImport(UIKit)
 @testable import FluentTheme
 import SnapshotTesting
 import SwiftUI
@@ -109,3 +110,4 @@ extension FluentThemeTests {
 		.brandStroke1Selected,
 	]
 }
+#endif

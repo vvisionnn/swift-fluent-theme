@@ -1,7 +1,9 @@
 #if DEBUG
 import Foundation
 import SwiftUI
+#if canImport(UIKit)
 import UIKit
+#endif
 
 struct ThemePresentationView: View {
 	@Environment(\.fluentTheme) var fluentTheme
@@ -63,6 +65,7 @@ struct PresentationChildView: View {
 		.fluentTheme(.init())
 }
 
+#if canImport(UIKit)
 extension Color {
 	func hexString(for traitCollection: UITraitCollection? = nil) -> String? {
 		typealias NativeColor = UIColor
@@ -100,4 +103,5 @@ extension Color {
 		return (lightHex, darkHex)
 	}
 }
+#endif
 #endif

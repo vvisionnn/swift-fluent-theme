@@ -1,10 +1,14 @@
 import CoreGraphics
+#if canImport(UIKit)
 import UIKit
+#elseif canImport(AppKit)
+import AppKit
+#endif
 
 /// Represents a two-part shadow as used by FluentUI.
 public struct ShadowInfo: Sendable {
 	/// The color of the key shadow.
-	public let keyColor: UIColor
+	public let keyColor: PlatformColor
 
 	/// The blur of the key shadow.
 	public let keyBlur: CGFloat
@@ -16,7 +20,7 @@ public struct ShadowInfo: Sendable {
 	public let yKey: CGFloat
 
 	/// The color of the ambient shadow.
-	public let ambientColor: UIColor
+	public let ambientColor: PlatformColor
 
 	/// The blur of the ambient shadow.
 	public let ambientBlur: CGFloat
@@ -42,11 +46,11 @@ public struct ShadowInfo: Sendable {
 	///   - xAmbient: The horizontal offset of the ambient shadow.
 	///   - yAmbient: The vertical offset of the ambient shadow.
 	public init(
-		keyColor: UIColor,
+		keyColor: PlatformColor,
 		keyBlur: CGFloat,
 		xKey: CGFloat,
 		yKey: CGFloat,
-		ambientColor: UIColor,
+		ambientColor: PlatformColor,
 		ambientBlur: CGFloat,
 		xAmbient: CGFloat,
 		yAmbient: CGFloat
@@ -63,6 +67,7 @@ public struct ShadowInfo: Sendable {
 }
 
 /// Public protocol that, when implemented, allows any UIView or one of its subviews to implement fluent shadows
+@MainActor
 public protocol Shadowable {
 	/// The layer on which the ambient shadow is implemented
 	var ambientShadow: CALayer? { get set }

@@ -1,4 +1,9 @@
 import SwiftUI
+#if canImport(UIKit)
+import UIKit
+#elseif canImport(AppKit)
+import AppKit
+#endif
 
 extension FluentTheme {
 	enum EnvKey {}
@@ -28,9 +33,16 @@ extension Binding where Value == FluentTheme {
 		wrappedValue.color(token)
 	}
 
+	#if canImport(UIKit)
 	public func uiColor(_ token: FluentTheme.ColorToken) -> UIColor {
 		wrappedValue.uiColor(token)
 	}
+
+	#elseif canImport(AppKit)
+	public func nsColor(_ token: FluentTheme.ColorToken) -> NSColor {
+		wrappedValue.nsColor(token)
+	}
+	#endif
 
 	public func gradient(_ token: FluentTheme.GradientToken) -> [Color] {
 		wrappedValue.gradient(token)

@@ -1,3 +1,4 @@
+#if canImport(UIKit)
 import SwiftUI
 
 extension UIColor {
@@ -196,3 +197,4 @@ extension UIColor {
 		return resolvedColor
 	}
 }
+#endif

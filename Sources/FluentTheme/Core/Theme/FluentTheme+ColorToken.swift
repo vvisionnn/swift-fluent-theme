@@ -1,4 +1,9 @@
 import SwiftUI
+#if canImport(UIKit)
+import UIKit
+#elseif canImport(AppKit)
+import AppKit
+#endif
 
 extension FluentTheme {
 	public enum ColorToken: Int, TokenSetKey {
@@ -114,6 +119,7 @@ extension FluentTheme {
 		Color(dynamicColor: colorTokenSet[token])
 	}
 
+	#if canImport(UIKit)
 	/// Returns the color value for the given token.
 	///
 	/// - Parameter token: The `ColorsTokens` value to be retrieved.
@@ -121,6 +127,16 @@ extension FluentTheme {
 	public func uiColor(_ token: ColorToken) -> UIColor {
 		UIColor(dynamicColor: colorTokenSet[token])
 	}
+
+	#elseif canImport(AppKit)
+	/// Returns the color value for the given token.
+	///
+	/// - Parameter token: The `ColorsTokens` value to be retrieved.
+	/// - Returns: An `NSColor` for the given token.
+	public func nsColor(_ token: ColorToken) -> NSColor {
+		NSColor(dynamicColor: colorTokenSet[token])
+	}
+	#endif
 
 	static func defaultColor(_ token: FluentTheme.ColorToken, disableDarkElevated: Bool = true) -> DynamicColor {
 		switch token {

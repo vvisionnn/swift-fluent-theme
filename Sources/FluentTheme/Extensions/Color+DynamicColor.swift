@@ -1,4 +1,9 @@
 import SwiftUI
+#if canImport(UIKit)
+import UIKit
+#elseif canImport(AppKit)
+import AppKit
+#endif
 
 extension Color {
 	/// Creates a `Color` instance with the specified three-channel, 8-bit-per-channel color value, usually in hex.
@@ -26,20 +31,15 @@ extension Color {
 		dark: Color? = nil,
 		darkElevated: Color? = nil
 	) {
-		let dynamicColor = DynamicColor(light: light, dark: dark, darkElevated: darkElevated)
-		if #available(iOS 17, *) {
-			self.init(dynamicColor)
-		} else {
-			self.init(uiColor: UIColor(dynamicColor: dynamicColor))
-		}
+		self.init(dynamicColor: DynamicColor(light: light, dark: dark, darkElevated: darkElevated))
 	}
 
 	init(dynamicColor: DynamicColor) {
-		if #available(iOS 17, *) {
-			self.init(dynamicColor)
-		} else {
-			self.init(uiColor: UIColor(dynamicColor: dynamicColor))
-		}
+		#if canImport(UIKit)
+		self.init(dynamicColor)
+		#elseif canImport(AppKit)
+		self.init(nsColor: NSColor(dynamicColor: dynamicColor))
+		#endif
 	}
 }
 
@@ -60,16 +60,22 @@ struct DynamicColor: Hashable, Sendable {
 		self.darkElevated = darkElevated
 	}
 
-	init(uiColor: UIColor) {
+	init(platformColor: PlatformColor) {
+		#if canImport(UIKit)
 		self.init(
-			light: Color(uiColor.light),
-			dark: Color(uiColor.dark),
-			darkElevated: Color(uiColor.darkElevated)
+			light: Color(uiColor: platformColor.light),
+			dark: Color(uiColor: platformColor.dark),
+			darkElevated: Color(uiColor: platformColor.darkElevated)
 		)
+		#elseif canImport(AppKit)
+		self.init(
+			light: Color(nsColor: platformColor.light),
+			dark: Color(nsColor: platformColor.dark)
+		)
+		#endif
 	}
 }
 
-@available(iOS 17, *)
 extension DynamicColor: ShapeStyle {
 	/// Evaluate to a resolved `Color` (in the form of a `ShapeStyle`) given the current `environment`.
 	func resolve(in environment: EnvironmentValues) -> Color.Resolved {

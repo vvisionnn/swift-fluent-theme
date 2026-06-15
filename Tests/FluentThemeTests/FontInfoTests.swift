@@ -1,3 +1,4 @@
+#if canImport(UIKit)
 @testable import FluentTheme
 import SwiftUI
 import XCTest
@@ -156,3 +157,4 @@ final class FontInfoTests: XCTestCase {
 		}
 	}
 }
+#endif

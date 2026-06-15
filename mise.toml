@@ -1,6 +1,7 @@
 [tools]
 swiftformat = "latest"
 node = "22"
+tuist = "4.200.2"
 
 [settings]
 jobs = 6

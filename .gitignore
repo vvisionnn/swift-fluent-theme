@@ -10,3 +10,10 @@ swift-fluent-theme.xcodeproj/
 Derived/
 
 mise.local.toml
+
+# Tuist (Examples app)
+Examples/*.xcodeproj
+Examples/*.xcworkspace
+Examples/Derived/
+Examples/.build/
+.tuist/

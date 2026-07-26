@@ -1,4 +1,6 @@
-#if canImport(UIKit)
+// The baselines in `__Snapshots__` are rendered on iPhone. Running this suite on any other platform
+// would compare against the wrong reference images, so it is scoped to iOS proper.
+#if os(iOS) && !targetEnvironment(macCatalyst)
 @testable import FluentTheme
 import SnapshotTesting
 import SwiftUI

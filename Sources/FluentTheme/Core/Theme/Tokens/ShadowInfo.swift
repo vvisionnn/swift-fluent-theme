@@ -66,6 +66,7 @@ public struct ShadowInfo: Sendable {
 	}
 }
 
+#if canImport(UIKit) && !os(watchOS)
 /// Public protocol that, when implemented, allows any UIView or one of its subviews to implement fluent shadows
 @MainActor
 public protocol Shadowable {
@@ -75,3 +76,4 @@ public protocol Shadowable {
 	/// The layer on which the key shadow is implemented
 	var keyShadow: CALayer? { get set }
 }
+#endif

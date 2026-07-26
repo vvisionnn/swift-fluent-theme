@@ -44,24 +44,30 @@ extension Color {
 }
 
 /// A container that stores a dynamic set of `Color` values.
-struct DynamicColor: Hashable, Sendable {
-	let light: Color
-	let dark: Color?
-	let darkElevated: Color?
+///
+/// This is the theme's normalized color currency: every token is stored as a `DynamicColor`, and the
+/// platform-native color types (`UIColor`, `NSColor`) are bridges at the edges. On watchOS — which has
+/// no dynamic `UIColor` — it *is* ``PlatformColor``.
+public struct DynamicColor: Hashable, Sendable {
+	public let light: Color
+	public let dark: Color?
+	public let darkElevated: Color?
 
 	/// Creates a custom `ShapeStyle` that stores a dynamic set of `Color` values.
 	///
 	/// - Parameter light: The default `Color` for a light context. Required.
 	/// - Parameter dark: The override `Color` for a dark context. Optional.
 	/// - Parameter darkElevated: The override `Color` for a dark elevated context. Optional.
-	init(light: Color, dark: Color? = nil, darkElevated: Color? = nil) {
+	public init(light: Color, dark: Color? = nil, darkElevated: Color? = nil) {
 		self.light = light
 		self.dark = dark
 		self.darkElevated = darkElevated
 	}
 
 	init(platformColor: PlatformColor) {
-		#if canImport(UIKit)
+		#if os(watchOS)
+		self = platformColor
+		#elseif canImport(UIKit)
 		self.init(
 			light: Color(uiColor: platformColor.light),
 			dark: Color(uiColor: platformColor.dark),
@@ -78,7 +84,7 @@ struct DynamicColor: Hashable, Sendable {
 
 extension DynamicColor: ShapeStyle {
 	/// Evaluate to a resolved `Color` (in the form of a `ShapeStyle`) given the current `environment`.
-	func resolve(in environment: EnvironmentValues) -> Color.Resolved {
+	public func resolve(in environment: EnvironmentValues) -> Color.Resolved {
 		if environment.colorScheme == .dark {
 			if environment.isPresented, let darkElevated = darkElevated {
 				return darkElevated.resolve(in: environment)

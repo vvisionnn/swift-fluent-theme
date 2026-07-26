@@ -34,6 +34,7 @@ extension FluentTheme {
 		)
 	}
 
+	#if !os(watchOS)
 	/// Returns the font value for the given token.
 	///
 	/// - Parameter token: The `TypographyTokens` value to be retrieved.
@@ -51,6 +52,7 @@ extension FluentTheme {
 			contentSizeCategory: contentSizeCategory
 		)
 	}
+	#endif
 
 	#elseif canImport(AppKit)
 	/// Returns the font value for the given token.

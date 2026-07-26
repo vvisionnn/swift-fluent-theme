@@ -65,7 +65,7 @@ struct PresentationChildView: View {
 		.fluentTheme(.init())
 }
 
-#if canImport(UIKit)
+#if canImport(UIKit) && !os(watchOS)
 extension Color {
 	func hexString(for traitCollection: UITraitCollection? = nil) -> String? {
 		typealias NativeColor = UIColor

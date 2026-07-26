@@ -1,4 +1,4 @@
-#if canImport(UIKit)
+#if canImport(UIKit) && !os(watchOS)
 import UIKit
 
 /// A reference-type wrapper around `FluentTheme` so it can be stored in a `UITraitDefinition`.

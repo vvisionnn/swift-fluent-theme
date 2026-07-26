@@ -1,4 +1,4 @@
-#if canImport(UIKit)
+#if canImport(UIKit) && !os(watchOS)
 import SwiftUI
 
 extension UIColor {
@@ -42,7 +42,7 @@ extension UIColor {
 				elevated: UIColor?,
 				elevatedHighContrast: UIColor?
 			) -> UIColor? in
-				if traits.userInterfaceLevel == .elevated,
+				if traits.isElevated,
 				   let color = getColorForContrast(elevated, elevatedHighContrast) {
 					return color
 				}
@@ -116,7 +116,7 @@ extension UIColor {
 	public var lightElevated: UIColor {
 		resolvedColorValue(
 			userInterfaceStyle: .light,
-			userInterfaceLevel: .elevated
+			isElevated: true
 		)
 	}
 
@@ -124,7 +124,7 @@ extension UIColor {
 		resolvedColorValue(
 			userInterfaceStyle: .light,
 			accessibilityContrast: .high,
-			userInterfaceLevel: .elevated
+			isElevated: true
 		)
 	}
 
@@ -142,7 +142,7 @@ extension UIColor {
 	public var darkElevated: UIColor {
 		resolvedColorValue(
 			userInterfaceStyle: .dark,
-			userInterfaceLevel: .elevated
+			isElevated: true
 		)
 	}
 
@@ -150,7 +150,7 @@ extension UIColor {
 		resolvedColorValue(
 			userInterfaceStyle: .dark,
 			accessibilityContrast: .high,
-			userInterfaceLevel: .elevated
+			isElevated: true
 		)
 	}
 
@@ -167,34 +167,23 @@ extension UIColor {
 	///
 	/// - Parameter userInterfaceStyle: The user interface style to use when resolving the color information.
 	/// - Parameter accessibilityContrast: The accessibility contrast to use when resolving the color information.
-	/// - Parameter userInterfaceLevel: The user interface level to use when resolving the color information.
+	/// - Parameter isElevated: Whether to resolve for an elevated context. Ignored on platforms without an
+	///   elevation axis.
 	///
 	/// - Returns: The version of the color to display for the specified traits.
 
 	private func resolvedColorValue(
 		userInterfaceStyle: UIUserInterfaceStyle,
 		accessibilityContrast: UIAccessibilityContrast = .unspecified,
-		userInterfaceLevel: UIUserInterfaceLevel = .unspecified
+		isElevated: Bool = false
 	) -> UIColor {
-		let traitCollection: UITraitCollection
-		if #available(iOS 17, *) {
-			traitCollection = UITraitCollection(mutations: { mutableTraits in
-				mutableTraits.userInterfaceStyle = userInterfaceStyle
-				mutableTraits.accessibilityContrast = accessibilityContrast
-				mutableTraits.userInterfaceLevel = userInterfaceLevel
-			})
-		} else {
-			let traitCollectionStyle = UITraitCollection(userInterfaceStyle: userInterfaceStyle)
-			let traitCollectionContrast = UITraitCollection(accessibilityContrast: accessibilityContrast)
-			let traitCollectionLevel = UITraitCollection(userInterfaceLevel: userInterfaceLevel)
-			traitCollection = UITraitCollection(traitsFrom: [
-				traitCollectionStyle,
-				traitCollectionContrast,
-				traitCollectionLevel,
-			])
-		}
-		let resolvedColor = resolvedColor(with: traitCollection)
-		return resolvedColor
+		resolvedColor(
+			with: .fluentTraits(
+				userInterfaceStyle: userInterfaceStyle,
+				accessibilityContrast: accessibilityContrast,
+				isElevated: isElevated
+			)
+		)
 	}
 }
 #endif

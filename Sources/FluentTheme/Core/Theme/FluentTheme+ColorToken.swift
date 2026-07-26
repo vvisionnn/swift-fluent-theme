@@ -119,7 +119,7 @@ extension FluentTheme {
 		Color(dynamicColor: colorTokenSet[token])
 	}
 
-	#if canImport(UIKit)
+	#if canImport(UIKit) && !os(watchOS)
 	/// Returns the color value for the given token.
 	///
 	/// - Parameter token: The `ColorsTokens` value to be retrieved.

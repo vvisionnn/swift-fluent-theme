@@ -19,7 +19,7 @@ extension FluentTheme {
 		gradientTokenSet[token].map { Color(dynamicColor: $0) }
 	}
 
-	#if canImport(UIKit)
+	#if canImport(UIKit) && !os(watchOS)
 	/// Returns an array of `UIColor` values for the given token.
 	///
 	/// - Parameter token: The `GradientTokens` value to be retrieved.

@@ -33,7 +33,7 @@ extension Binding where Value == FluentTheme {
 		wrappedValue.color(token)
 	}
 
-	#if canImport(UIKit)
+	#if canImport(UIKit) && !os(watchOS)
 	public func uiColor(_ token: FluentTheme.ColorToken) -> UIColor {
 		wrappedValue.uiColor(token)
 	}

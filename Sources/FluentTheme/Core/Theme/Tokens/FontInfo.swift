@@ -72,21 +72,28 @@ extension Font {
 #if canImport(UIKit)
 extension UIFont {
 	public static func fluent(_ fontInfo: FontInfo, shouldScale: Bool = true) -> UIFont {
-		fluent(fontInfo, shouldScale: shouldScale, contentSizeCategory: nil)
+		fluent(fontInfo, shouldScale: shouldScale, scalingTraits: nil)
 	}
 
+	#if !os(watchOS)
 	public static func fluent(
 		_ fontInfo: FontInfo,
 		shouldScale: Bool = true,
 		contentSizeCategory: UIContentSizeCategory?
 	) -> UIFont {
-		let traitCollection: UITraitCollection?
-		if let contentSizeCategory = contentSizeCategory {
-			traitCollection = .init(preferredContentSizeCategory: contentSizeCategory)
-		} else {
-			traitCollection = nil
-		}
+		fluent(
+			fontInfo,
+			shouldScale: shouldScale,
+			scalingTraits: contentSizeCategory.map { UITraitCollection(preferredContentSizeCategory: $0) }
+		)
+	}
+	#endif
 
+	private static func fluent(
+		_ fontInfo: FontInfo,
+		shouldScale: Bool,
+		scalingTraits: FluentScalingTraits?
+	) -> UIFont {
 		let weight = uiWeight(fontInfo.weight)
 
 		if let name = fontInfo.name,
@@ -95,7 +102,7 @@ extension UIFont {
 			let unscaledFont = font.withWeight(weight)
 			if shouldScale {
 				let fontMetrics = UIFontMetrics(forTextStyle: uiTextStyle(fontInfo.textStyle))
-				return fontMetrics.scaledFont(for: unscaledFont, compatibleWith: traitCollection)
+				return fontMetrics.fluentScaledFont(for: unscaledFont, scalingTraits: scalingTraits)
 			} else {
 				return unscaledFont
 			}
@@ -108,14 +115,14 @@ extension UIFont {
 			let textStyle = uiTextStyle(fontInfo.textStyle)
 			if FontInfo.sizeTuples.contains(where: { $0.size == fontInfo.size }) {
 				// System-recognized font size, let the OS scale it for us
-				return UIFont.preferredFont(forTextStyle: textStyle, compatibleWith: traitCollection).withWeight(weight)
+				return UIFont.fluentPreferredFont(forTextStyle: textStyle, scalingTraits: scalingTraits).withWeight(weight)
 			}
 
 			// Custom font size, we need to scale it ourselves
 			let fontMetrics = UIFontMetrics(forTextStyle: textStyle)
-			return fontMetrics.scaledFont(
+			return fontMetrics.fluentScaledFont(
 				for: .systemFont(ofSize: fontInfo.size, weight: weight),
-				compatibleWith: traitCollection
+				scalingTraits: scalingTraits
 			)
 		}
 	}
@@ -140,7 +147,12 @@ extension UIFont {
 	private static func uiTextStyle(_ textStyle: Font.TextStyle) -> UIFont.TextStyle {
 		switch textStyle {
 		case .largeTitle:
+			#if os(tvOS)
+			// tvOS has no `.largeTitle` text style; `.title1` is its largest.
+			return .title1
+			#else
 			return .largeTitle
+			#endif
 		case .title:
 			return .title1
 		case .title2:

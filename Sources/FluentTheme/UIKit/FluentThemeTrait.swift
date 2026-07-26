@@ -1,4 +1,4 @@
-#if canImport(UIKit)
+#if canImport(UIKit) && !os(watchOS)
 import UIKit
 
 /// A custom trait that carries the current `FluentTheme` down the view-controller / view hierarchy,

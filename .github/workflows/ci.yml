@@ -11,17 +11,49 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  build-and-test:
-    name: Build & Test
+  build:
+    name: Build (${{ matrix.platform }})
     runs-on: macos-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - platform: iOS
+            destination: 'generic/platform=iOS Simulator'
+          - platform: tvOS
+            destination: 'generic/platform=tvOS Simulator'
+          - platform: watchOS
+            destination: 'generic/platform=watchOS Simulator'
+          - platform: visionOS
+            destination: 'generic/platform=visionOS Simulator'
+          - platform: macCatalyst
+            destination: 'platform=macOS,variant=Mac Catalyst'
     steps:
       - uses: actions/checkout@v4
 
       - name: Toolchain
         run: swift --version && xcodebuild -version
 
-      - name: Build (iOS)
-        run: xcodebuild build -scheme swift-fluent-theme -destination 'generic/platform=iOS Simulator'
+      - name: Build
+        run: xcodebuild build -scheme swift-fluent-theme -destination '${{ matrix.destination }}'
 
-      - name: Build & test (macOS)
-        run: swift test
+  test:
+    name: Test (${{ matrix.platform }})
+    runs-on: macos-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          # The snapshot baselines in Tests/FluentThemeTests/__Snapshots__ are recorded on iPhone 17 Pro.
+          - platform: iOS
+            run: xcodebuild test -scheme swift-fluent-theme -destination 'platform=iOS Simulator,name=iPhone 17 Pro'
+          - platform: macOS
+            run: swift test
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Toolchain
+        run: swift --version && xcodebuild -version
+
+      - name: Test
+        run: ${{ matrix.run }}

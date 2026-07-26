@@ -4,18 +4,25 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-Swift package providing Microsoft Fluent UI design tokens (colors, typography, shadows, gradients, spacing, corner radii, stroke widths, icon sizes) for iOS. Standalone extraction of the theming layer from Microsoft's Fluent UI system. Work in progress.
+Swift package providing Microsoft Fluent UI design tokens (colors, typography, shadows, gradients, spacing, corner radii, stroke widths, icon sizes) for every Apple platform. Standalone extraction of the theming layer from Microsoft's Fluent UI system. Work in progress.
 
 ## Build & Test Commands
 
-This is an **iOS-only** package (iOS 16+) — you must specify a simulator destination.
+Supported platforms: iOS 17, macOS 14, tvOS 17, watchOS 10, visionOS 1, Mac Catalyst. Building for a
+simulator platform requires a destination.
 
 ```bash
-# Build
+# Build (iOS; swap the platform for tvOS / watchOS / visionOS Simulator)
 xcodebuild -scheme swift-fluent-theme -destination 'platform=iOS Simulator,name=iPhone 17 Pro' build
 
-# Run all tests
+# Build (Mac Catalyst)
+xcodebuild -scheme swift-fluent-theme -destination 'platform=macOS,variant=Mac Catalyst' build
+
+# Run all tests (iOS — this is where the snapshot suite lives)
 xcodebuild test -scheme swift-fluent-theme -destination 'platform=iOS Simulator,name=iPhone 17 Pro'
+
+# Run all tests (macOS)
+swift test
 
 # Run a single test (Swift Testing or XCTest)
 xcodebuild test -scheme swift-fluent-theme -destination 'platform=iOS Simulator,name=iPhone 17 Pro' \
@@ -25,6 +32,14 @@ xcodebuild test -scheme swift-fluent-theme -destination 'platform=iOS Simulator,
 mise run format
 # Or directly:
 swiftformat .
+```
+
+Platforms whose Xcode components are not installed locally can still be verified by compiling the module
+directly against their SDK, e.g.:
+
+```bash
+xcrun --sdk watchos swiftc -swift-version 6 -typecheck -target arm64_32-apple-watchos10.0 \
+  $(find Sources/FluentTheme -name '*.swift')
 ```
 
 **Snapshot tests:** Uses pointfreeco/swift-snapshot-testing. Reference images live in `Tests/FluentThemeTests/__Snapshots__/`. First run on a new machine or after deleting snapshots will record new baselines.
@@ -49,11 +64,34 @@ The core pattern is **design tokens** — named values for colors, typography, s
 
 **`GlobalTokens`** — Empty enum namespace with static methods for raw design values (brand colors, neutral colors, shared colors, font sizes, spacing, corner radii, etc.). All token key types are enums conforming to `TokenSetKey` (`Hashable & CaseIterable & Sendable`).
 
+### Platform tiers
+
+Every conditional in the package is written against one of three mutually exclusive capability tiers,
+declared and documented in `Sources/FluentTheme/Platform/PlatformAliases.swift`:
+
+| Tier | Condition | Platforms |
+|---|---|---|
+| SwiftUI-only | `#if os(watchOS)` | watchOS (UIKit imports, but has no `UIView`, `CALayer`, `UITraitCollection`, or dynamic `UIColor`) |
+| UIKit | `#elseif canImport(UIKit)` | iOS, iPadOS, tvOS, visionOS, Mac Catalyst |
+| AppKit | `#elseif canImport(AppKit)` | macOS |
+
+Files outside such a chain spell the same rule out inline — `canImport(AppKit)` alone is **true** under
+Mac Catalyst, where nearly all of AppKit is unavailable, so the AppKit tier is always written as
+`!canImport(UIKit) && canImport(AppKit)`, and the UIKit view layer as `canImport(UIKit) && !os(watchOS)`.
+
 ### Color system
 
-- **`DynamicColor`** — Holds light, dark, and darkElevated color variants. Conforms to `ShapeStyle` on iOS 17+.
+- **`DynamicColor`** — the normalized color currency. Holds light, dark, and darkElevated `Color` variants, conforms to `ShapeStyle`, and is what every token is stored as on every platform.
+- **`PlatformColor`** — `UIColor` on UIKit platforms, `NSColor` on macOS, `DynamicColor` on watchOS. All three satisfy the same contract (`init(hexValue:)`, `init(light:dark:)`, `init(red:green:blue:alpha:)`, `.clear`), so token, shadow, and `ColorProviding` code is written once. `DynamicColor`'s side of that contract lives in `Platform/DynamicColor+PlatformColor.swift` and is declared unconditionally so it stays testable on every platform.
 - **`ColorProviding`** protocol — Allows consumers to supply brand color overrides (21 color properties). Two built-in presets: `.green` and `.purple`.
-- Colors use hex initializers (`Color(hexValue:)`, `UIColor(hexValue:)`). Both SwiftUI and UIKit color types are supported.
+- Colors use hex initializers (`Color(hexValue:)`, `PlatformColor(hexValue:)`).
+
+### Platform capability gaps
+
+- tvOS has no `UIUserInterfaceLevel`; the elevated axis degrades to base level via `UITraitCollection.isElevated` (`Platform/UITraitCollection+Elevation.swift`).
+- tvOS has no `UIFont.TextStyle.largeTitle`; it maps to `.title1`.
+- watchOS has no `UIContentSizeCategory`, so the `contentSizeCategory:` typography overloads are absent there; scaling goes through `Platform/UIFont+FluentScaling.swift`.
+- visionOS keeps only the light variant of brand colors (see `ColorProviding.swift`).
 
 ### SwiftUI integration
 
